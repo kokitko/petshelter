@@ -8,6 +8,6 @@ public class OrgProfile : BaseEntity
     public AppUser User { get; set; } = null!;
     public string OrgName { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
-    public string Website { get; set; } = string.Empty;
+    public string? Website { get; set; }
     public bool IsVerified { get; set; } = false;
 }
