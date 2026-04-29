@@ -6,12 +6,12 @@ namespace PetShelter.Infrastructure.Persistence.Repositories;
 
 public class PetRepository(PetShelterDbContext context) : IPetRepository
 {
-    public Task AddAsync(Pet pet)
+    public async Task AddAsync(Pet pet)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Pet?> GetByIdAsync(Guid id)
+    public async Task<Pet?> GetByIdAsync(Guid id)
     {
         throw new NotImplementedException();
     }

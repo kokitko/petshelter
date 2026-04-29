@@ -5,12 +5,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Authentication\" />
+    <Folder Include="Authentication\Commands\" />
+    <Folder Include="Authentication\Common\" />
+    <Folder Include="Authentication\Queries\" />
     <Folder Include="Common\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Interfaces\Persistence\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Pet\" />
+    <Folder Include="Dtos\Users\" />
+    <Folder Include="Users\" />
   </ItemGroup>
 
   <ItemGroup>

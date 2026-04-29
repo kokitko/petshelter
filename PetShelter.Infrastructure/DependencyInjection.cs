@@ -27,6 +27,9 @@ public static class DependencyInjection
                 options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=PetShelterDb;Trusted_Connection=true;TrustServerCertificate=true"));
 
         services.AddScoped<IPetRepository, PetRepository>();
+        services.AddScoped<IAppUserRepository, AppUserRepository>();
+        services.AddScoped<IOrgProfileRepository, OrgProfileRepository>();
+        services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         
         return services;
     }
