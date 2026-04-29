@@ -8,12 +8,22 @@
     <Folder Include="Common\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Interfaces\Persistence\" />
+    <Folder Include="Common\Models\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Dtos\Pet\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
+    <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);RMG020</NoWarn>
   </PropertyGroup>
 
 </Project>

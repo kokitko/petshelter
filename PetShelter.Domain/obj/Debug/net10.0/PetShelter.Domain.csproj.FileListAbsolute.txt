@@ -9,3 +9,4 @@ C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\Pet
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\refint\PetShelter.Domain.dll
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.pdb
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\ref\PetShelter.Domain.dll
+C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.sourcelink.json
