@@ -9,10 +9,10 @@ using PetShelter.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PetShelter.Infrastructure.Persistence.Migrations
+namespace PetShelter.Infrastructure.Migrations
 {
     [DbContext(typeof(PetShelterDbContext))]
-    [Migration("20260429152152_Initial")]
+    [Migration("20260429213716_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -74,6 +74,9 @@ namespace PetShelter.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
@@ -218,9 +221,6 @@ namespace PetShelter.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")

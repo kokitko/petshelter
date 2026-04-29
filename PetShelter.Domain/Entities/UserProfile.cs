@@ -8,6 +8,5 @@ public class UserProfile : BaseEntity
     public AppUser User { get; set; } = null!;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public string? PhoneNumber { get; set; }
     public string? AvatarUrl { get; set; }
 }

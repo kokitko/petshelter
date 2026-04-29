@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using PetShelter.Infrastructure.Persistence;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Infrastructure.Persistence.Repositories;
+using PetShelter.Application.Common.Interfaces.Authentication;
+using PetShelter.Infrastructure.Authentication;
 
 namespace PetShelter.Infrastructure;
 
@@ -13,6 +15,9 @@ public static class DependencyInjection
         this IServiceCollection services, 
         IConfiguration configuration)
     {
+        services
+            .AddScoped<IPasswordHasher, PasswordHasher>();
+
         services
             .AddPersistence();
 

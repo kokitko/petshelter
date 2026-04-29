@@ -5,12 +5,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authentication\" />
-    <Folder Include="Authentication\Commands\" />
     <Folder Include="Authentication\Common\" />
+    <Folder Include="Authentication\Common\Validators\" />
     <Folder Include="Authentication\Queries\" />
     <Folder Include="Common\" />
+    <Folder Include="Common\Behaviours\" />
     <Folder Include="Common\Interfaces\" />
+    <Folder Include="Common\Interfaces\Authentication\" />
     <Folder Include="Common\Interfaces\Persistence\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Dtos\" />
@@ -20,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
     <PackageReference Include="Riok.Mapperly" Version="4.3.1" />

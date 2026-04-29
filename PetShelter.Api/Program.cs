@@ -18,6 +18,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseExceptionHandler();
+
 app.UseHttpsRedirection();
 
 app.MapControllers();

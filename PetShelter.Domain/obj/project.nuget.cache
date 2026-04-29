@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8oIita+T9Hw=",
+  "dgSpecHash": "frb/ihFAE30=",
   "success": true,
   "projectFilePath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\PetShelter.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\koksv\\.nuget\\packages\\erroror\\2.0.1\\erroror.2.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

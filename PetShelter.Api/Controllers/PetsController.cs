@@ -5,7 +5,6 @@ using PetShelter.Application.Pets.Queries;
 namespace PetShelter.Api.Controllers
 {
     [Route("api/pets")]
-    [ApiController]
     public class PetsController(ISender sender) : ApiController
     {
         [HttpGet]

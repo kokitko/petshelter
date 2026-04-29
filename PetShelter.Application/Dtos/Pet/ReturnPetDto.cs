@@ -1,6 +1,6 @@
 namespace PetShelter.Application.Dtos.Pet;
 
-public record ReturnPetDto(
+public record PetResponse(
     Guid Id,
     string Name,
     string Breed,

@@ -8,7 +8,7 @@ using PetShelter.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PetShelter.Infrastructure.Persistence.Migrations
+namespace PetShelter.Infrastructure.Migrations
 {
     [DbContext(typeof(PetShelterDbContext))]
     partial class PetShelterDbContextModelSnapshot : ModelSnapshot
@@ -71,6 +71,9 @@ namespace PetShelter.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
@@ -215,9 +218,6 @@ namespace PetShelter.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")

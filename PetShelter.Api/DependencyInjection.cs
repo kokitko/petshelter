@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using PetShelter.Api.Common.Errors;
+using PetShelter.Api.Common.Exceptions;
+
 namespace PetShelter.Api;
 
 public static class DependencyInjection
@@ -6,6 +10,9 @@ public static class DependencyInjection
     {
         services.AddOpenApi();
         services.AddControllers();
+        services.AddSingleton<ProblemDetailsFactory, PetShelterProblemDetailsFactory>();
+        services.AddProblemDetails();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
         return services;
     }
 }
