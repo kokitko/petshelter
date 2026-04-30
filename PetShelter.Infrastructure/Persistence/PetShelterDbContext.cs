@@ -57,6 +57,11 @@ public class PetShelterDbContext(DbContextOptions<PetShelterDbContext> options) 
             .HasIndex(u => u.Email)
             .IsUnique();
 
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(rt => rt.User)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
