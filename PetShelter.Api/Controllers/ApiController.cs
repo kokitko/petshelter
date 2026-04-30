@@ -28,6 +28,7 @@ namespace PetShelter.Api.Controllers
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
                 ErrorType.Validation => StatusCodes.Status400BadRequest,
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
+                ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
                 _ => StatusCodes.Status500InternalServerError
             };
 

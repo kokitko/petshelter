@@ -24,8 +24,6 @@
     <Folder Include="Common\" />
     <Folder Include="Common\Errors\" />
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Contracts\Authentication\" />
     <Folder Include="Controllers\" />
     <Folder Include="Http\" />
   </ItemGroup>

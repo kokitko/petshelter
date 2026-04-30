@@ -41,6 +41,7 @@ public static class DependencyInjection
         services.AddScoped<IAppUserRepository, AppUserRepository>();
         services.AddScoped<IOrgProfileRepository, OrgProfileRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         
         return services;
@@ -68,6 +69,8 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
             });
+
+        services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
 
         return services;
     }

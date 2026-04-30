@@ -12,7 +12,8 @@ namespace PetShelter.Application.Authentication.Commands;
 public class RegisterUserCommandHandler(
     IAppUserRepository userRepository,
     IPasswordHasher passwordHasher,
-    IJwtTokenGenerator jwtTokenGenerator
+    IJwtTokenGenerator jwtTokenGenerator,
+    IRefreshTokenGenerator refreshTokenGenerator
 ) : IRequestHandler<RegisterUserCommand, ErrorOr<AuthenticationResult>>
 {
     public async Task<ErrorOr<AuthenticationResult>> Handle(
@@ -58,17 +59,7 @@ public class RegisterUserCommandHandler(
         }
 
         var accessToken = jwtTokenGenerator.GenerateToken(user);
-        var refreshToken = 
-            Convert.ToBase64String(Guid.NewGuid().ToByteArray()) + 
-            Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-
-        RefreshToken refreshTokenEntity = new RefreshToken
-        {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            Token = refreshToken,
-            ExpiresAt = DateTime.UtcNow.AddDays(14)
-        };
+        var refreshTokenEntity = refreshTokenGenerator.GenerateRefreshToken(user);
 
         user.RefreshTokens.Add(refreshTokenEntity);
 
@@ -76,6 +67,6 @@ public class RegisterUserCommandHandler(
 
         var userDto = user.ToReturnAuthUserDto();
 
-        return new AuthenticationResult(accessToken, refreshToken, userDto);
+        return new AuthenticationResult(accessToken, refreshTokenEntity.Token, userDto);
     }
 }

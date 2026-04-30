@@ -5,6 +5,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Authentication\Commands\Login\" />
+    <Folder Include="Authentication\Commands\RefreshToken\" />
     <Folder Include="Authentication\Common\" />
     <Folder Include="Authentication\Common\Validators\" />
     <Folder Include="Authentication\Queries\" />

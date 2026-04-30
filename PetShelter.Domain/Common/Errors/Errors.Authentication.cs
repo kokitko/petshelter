@@ -20,5 +20,15 @@ public static partial class Errors
             code: "Authentication.MissingUserType",
             description: "A user must have either an organization profile or a user profile."
         );
+
+        public static Error InvalidCredentials => Error.Unauthorized(
+            code: "Authentication.InvalidCredentials",
+            description: "Invalid email or password."
+        );
+
+        public static Error InvalidRefreshToken => Error.Unauthorized(
+            code: "Authentication.InvalidRefreshToken",
+            description: "The provided refresh token is invalid or has expired."
+        );
     }
 }

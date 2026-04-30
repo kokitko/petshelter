@@ -229,7 +229,7 @@ namespace PetShelter.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshToken");
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("PetShelter.Domain.Entities.UserProfile", b =>

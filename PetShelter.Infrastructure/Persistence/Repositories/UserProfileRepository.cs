@@ -24,4 +24,11 @@ public class UserProfileRepository(PetShelterDbContext context) : IUserProfileRe
         context.UserProfiles.Update(profile);
         await context.SaveChangesAsync();
     }
+
+    public async Task<UserProfile?> GetByUserIdAsync(Guid userId)
+    {
+        var profile = await context.UserProfiles.FindAsync(userId);
+
+        return profile;
+    }
 }

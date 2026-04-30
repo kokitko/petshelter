@@ -21,9 +21,18 @@ public class AppUserRepository(PetShelterDbContext context) : IAppUserRepository
         return user;
     }
 
-    public Task UpdateAsync(AppUser user)
+    public async Task<AppUser?> GetByIdAsync(Guid id)
+    {
+        var user = await context.AppUsers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == id);
+
+        return user;
+    }
+
+    public async Task UpdateAsync(AppUser user)
     {
         context.AppUsers.Update(user);
-        return context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }

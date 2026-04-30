@@ -12,6 +12,7 @@ public class PetShelterDbContext(DbContextOptions<PetShelterDbContext> options) 
     public DbSet<AdoptionApplication> AdoptionApplications => Set<AdoptionApplication>();
     public DbSet<OrgProfile> OrgProfiles => Set<OrgProfile>();
     public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
