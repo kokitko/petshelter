@@ -32,10 +32,36 @@ namespace PetShelter.Api.Controllers
             );
             var result = await sender.Send(command);
 
-            // TO REWRITE: should return accesstoken and user, refreshtoken in the cookie
+
+
             return result.Match(
-                authResult => Ok(authResult),
+                authResult =>
+                {
+                    SetRefreshTokenCookie(authResult.RefreshToken, Response);
+                    var response = new RegisterResponse(
+                        authResult.AccessToken,
+                        new UserAuthResponse(
+                            authResult.User.Id,
+                            authResult.User.Email,
+                            authResult.User.PhoneNumber,
+                            authResult.User.Role
+                        )
+                    );
+                    return Ok(response);
+                },
                 errors => Problem(errors));
+        }
+
+        private static void SetRefreshTokenCookie(string refreshToken, HttpResponse response)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(14),
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            };
+            response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
     }
 }

@@ -9,7 +9,7 @@ builder.Services
     .AddApplication()
     .AddPresentation()
     .AddInfrastructure(builder.Configuration);
-
+    
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

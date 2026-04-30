@@ -7,5 +7,5 @@ namespace PetShelter.Application.Mappings;
 [Mapper]
 public static partial class AppUserMapper
 {
-    public static partial AppUserResponse ToAppUserResponse(this AppUser user);
+    public static partial ReturnAuthUserDto ToReturnAuthUserDto(this AppUser user);
 }

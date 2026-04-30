@@ -11,10 +11,13 @@ namespace PetShelter.Application.Authentication.Commands;
 
 public class RegisterUserCommandHandler(
     IAppUserRepository userRepository,
-    IPasswordHasher passwordHasher
+    IPasswordHasher passwordHasher,
+    IJwtTokenGenerator jwtTokenGenerator
 ) : IRequestHandler<RegisterUserCommand, ErrorOr<AuthenticationResult>>
 {
-    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationResult>> Handle(
+        RegisterUserCommand request, 
+        CancellationToken cancellationToken)
     {
         if (await userRepository.GetByEmailAsync(request.Email) is not null)
             return Errors.Authentication.DuplicateEmail;
@@ -30,6 +33,7 @@ public class RegisterUserCommandHandler(
             Id = Guid.NewGuid(),
             Email = request.Email,
             PasswordHash = passwordHasher.HashPassword(request.Password),
+            PhoneNumber = request.PhoneNumber,
             Role = request.UserProfile != null ? UserRole.User : UserRole.Organization
         };
 
@@ -53,13 +57,24 @@ public class RegisterUserCommandHandler(
             user.UserProfile = userProfile;
         }
 
+        var accessToken = jwtTokenGenerator.GenerateToken(user);
+        var refreshToken = 
+            Convert.ToBase64String(Guid.NewGuid().ToByteArray()) + 
+            Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+        RefreshToken refreshTokenEntity = new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            Token = refreshToken,
+            ExpiresAt = DateTime.UtcNow.AddDays(14)
+        };
+
+        user.RefreshTokens.Add(refreshTokenEntity);
+
         await userRepository.AddAsync(user);
 
-        // Generate a token (for simplicity, using a GUID here)
-        var accessToken = Guid.NewGuid().ToString();
-        var refreshToken = Guid.NewGuid().ToString();
-
-        var userDto = user.ToAppUserResponse();
+        var userDto = user.ToReturnAuthUserDto();
 
         return new AuthenticationResult(accessToken, refreshToken, userDto);
     }
