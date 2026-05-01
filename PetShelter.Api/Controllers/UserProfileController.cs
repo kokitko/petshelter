@@ -9,6 +9,7 @@ namespace PetShelter.Api.Controllers
     public class UserProfileController(ISender sender) : ApiController
     {
         [HttpPut("update")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateUserProfile([FromForm] UserProfileUpdateRequest request)
         {
             var command = new UserProfileUpdateCommand(

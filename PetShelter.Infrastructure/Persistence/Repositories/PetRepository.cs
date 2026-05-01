@@ -8,12 +8,17 @@ public class PetRepository(PetShelterDbContext context) : IPetRepository
 {
     public async Task AddAsync(Pet pet)
     {
-        throw new NotImplementedException();
+        context.Pets.Add(pet);
+        await context.SaveChangesAsync();
     }
 
     public async Task<Pet?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var pet = await context.Pets
+            .Include(p => p.Images)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        return pet;
     }
 
     public async Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, string? species)

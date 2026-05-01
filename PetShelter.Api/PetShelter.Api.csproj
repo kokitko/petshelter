@@ -24,6 +24,7 @@
     <Folder Include="Common\" />
     <Folder Include="Common\Errors\" />
     <Folder Include="Common\Exceptions\" />
+    <Folder Include="Contracts\Pets\" />
     <Folder Include="Controllers\" />
     <Folder Include="Http\" />
   </ItemGroup>
