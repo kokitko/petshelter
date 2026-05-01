@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
-using PetShelter.Domain.Entities;
 using PetShelter.Application.Authentication.Commands;
+using PetShelter.Domain.Entities;
 
 namespace PetShelter.Application.Mappings;
 

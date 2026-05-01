@@ -7,6 +7,7 @@ public class AppUser : BaseEntity
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string? PhoneNumber { get; set; }
+    public string? ProfilePictureUrl { get; set; }
     public UserRole Role { get; set; } = UserRole.User;
     public UserProfile? UserProfile { get; set; }
     public OrgProfile? OrgProfile { get; set; }

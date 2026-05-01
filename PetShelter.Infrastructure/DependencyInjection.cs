@@ -42,6 +42,7 @@ public static class DependencyInjection
         services.AddScoped<IOrgProfileRepository, OrgProfileRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         
         return services;
@@ -56,6 +57,9 @@ public static class DependencyInjection
 
         services.AddSingleton(Options.Create(jwtSettings));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()

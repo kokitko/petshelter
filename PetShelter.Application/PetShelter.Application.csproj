@@ -8,7 +8,6 @@
     <Folder Include="Authentication\Commands\Login\" />
     <Folder Include="Authentication\Commands\RefreshToken\" />
     <Folder Include="Authentication\Common\" />
-    <Folder Include="Authentication\Common\Validators\" />
     <Folder Include="Authentication\Queries\" />
     <Folder Include="Common\" />
     <Folder Include="Common\Behaviours\" />
@@ -18,6 +17,12 @@
     <Folder Include="Common\Interfaces\Services\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Dtos\Pet\" />
+    <Folder Include="OrgProfiles\" />
+    <Folder Include="OrgProfiles\Common\" />
+    <Folder Include="OrgProfiles\Queries\" />
+    <Folder Include="UserProfiles\" />
+    <Folder Include="UserProfiles\Common\" />
+    <Folder Include="UserProfiles\Queries\" />
     <Folder Include="Users\" />
   </ItemGroup>
 

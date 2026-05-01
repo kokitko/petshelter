@@ -50,7 +50,7 @@ public class RegisterUserCommandHandler(
         }
         else if (request.UserProfile != null)
         {
-            UserProfile userProfile = request.UserProfile.ToUserProfile();
+            var userProfile = request.UserProfile.ToUserProfile();
             userProfile.Id = Guid.NewGuid();
             userProfile.UserId = user.Id;
             userProfile.User = user;

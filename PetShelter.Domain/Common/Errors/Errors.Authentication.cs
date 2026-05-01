@@ -30,5 +30,14 @@ public static partial class Errors
             code: "Authentication.InvalidRefreshToken",
             description: "The provided refresh token is invalid or has expired."
         );
+        public static Error Unauthenticated => Error.Unauthorized(
+            code: "Authentication.Unauthenticated",
+            description: "User is not authenticated."
+        );
+
+        public static Error Forbidden => Error.Forbidden(
+            code: "Authentication.Forbidden",
+            description: "You do not have permission to perform this action."
+        ); 
     }
 }

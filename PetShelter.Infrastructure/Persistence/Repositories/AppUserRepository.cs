@@ -24,7 +24,8 @@ public class AppUserRepository(PetShelterDbContext context) : IAppUserRepository
     public async Task<AppUser?> GetByIdAsync(Guid id)
     {
         var user = await context.AppUsers
-            .AsNoTracking()
+            .Include(u => u.OrgProfile)
+            .Include(u => u.UserProfile)
             .FirstOrDefaultAsync(u => u.Id == id);
 
         return user;
