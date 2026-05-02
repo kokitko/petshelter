@@ -28,4 +28,10 @@ public class AdoptionApplicationRepository(
     {
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(AdoptionApplication application)
+    {
+        context.AdoptionApplications.Remove(application);
+        await context.SaveChangesAsync();
+    }
 }

@@ -9,7 +9,6 @@ namespace PetShelter.Api.Controllers
     public class OrgProfileController(ISender sender) : ApiController
     {
         [HttpPut("update")]
-        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateOrgProfile([FromForm] OrgProfileUpdateRequest request)
         {
             var command = new OrgProfileUpdateCommand(

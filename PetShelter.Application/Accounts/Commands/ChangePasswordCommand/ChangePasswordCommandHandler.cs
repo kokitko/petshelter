@@ -23,7 +23,7 @@ public class ChangePasswordCommandHandler(
         if (user == null)
             return Errors.Accounts.NotFound;
 
-        if (!passwordHasher.VerifyPassword(user.PasswordHash, request.CurrentPassword))
+        if (!passwordHasher.VerifyPassword(request.CurrentPassword, user.PasswordHash))
             return Errors.Authentication.InvalidCredentials;
 
         user.PasswordHash = passwordHasher.HashPassword(request.NewPassword);

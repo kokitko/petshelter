@@ -8,4 +8,5 @@ public interface IPetRepository
     Task<Pet?> GetByIdAsync(Guid id);
     Task AddAsync(Pet pet);
     Task SaveChangesAsync();
+    Task DeleteAsync(Pet pet);
 }

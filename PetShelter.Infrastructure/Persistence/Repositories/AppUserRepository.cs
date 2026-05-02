@@ -36,4 +36,10 @@ public class AppUserRepository(PetShelterDbContext context) : IAppUserRepository
         context.AppUsers.Update(user);
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(AppUser user)
+    {
+        context.AppUsers.Remove(user);
+        await context.SaveChangesAsync();
+    }
 }

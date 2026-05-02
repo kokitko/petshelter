@@ -9,6 +9,7 @@
     <Folder Include="Accounts\Commands\" />
     <Folder Include="Accounts\Commands\ChangeEmailCommand\" />
     <Folder Include="Accounts\Commands\ChangePasswordCommand\" />
+    <Folder Include="Accounts\Commands\DeleteAccountCommand\" />
     <Folder Include="Accounts\Common\" />
     <Folder Include="Accounts\Queries\" />
     <Folder Include="AdoptionApplications\Commands\" />

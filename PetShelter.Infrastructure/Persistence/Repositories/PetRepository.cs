@@ -41,4 +41,10 @@ public class PetRepository(PetShelterDbContext context) : IPetRepository
     {
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(Pet pet)
+    {
+        context.Pets.Remove(pet);
+        await context.SaveChangesAsync();
+    }
 }

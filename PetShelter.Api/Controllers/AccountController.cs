@@ -3,6 +3,7 @@ using PetShelter.Api.Contracts.Account;
 using MediatR;
 using PetShelter.Application.Accounts.Commands.ChangePasswordCommand;
 using PetShelter.Application.Accounts.Commands.ChangeEmailCommand;
+using PetShelter.Application.Accounts.Commands.DeleteAccountCommand;
 
 namespace PetShelter.Api.Controllers
 {
@@ -34,6 +35,21 @@ namespace PetShelter.Api.Controllers
                 request.NewEmail,
                 request.CurrentPassword
             );
+
+            var result = await sender.Send(command);
+            return result.Match(
+                success =>
+                {
+                    ClearRefreshTokenCookie();
+                    return Ok(success);
+                },
+                error => Problem(error)
+            );
+        }
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteAccount(DeleteAccountRequest request)
+        {
+            var command = new DeleteAccountCommand(request.Password);
 
             var result = await sender.Send(command);
             return result.Match(

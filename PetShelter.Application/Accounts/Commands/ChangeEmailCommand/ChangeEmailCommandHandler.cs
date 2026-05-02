@@ -27,7 +27,7 @@ public class ChangeEmailCommandHandler(
         if (existingUserWithEmail != null && existingUserWithEmail.Id != user.Id)
             return Errors.Authentication.DuplicateEmail;
 
-        if (!passwordHasher.VerifyPassword(user.PasswordHash, request.CurrentPassword))
+        if (!passwordHasher.VerifyPassword(request.CurrentPassword, user.PasswordHash))
             return Errors.Authentication.InvalidCredentials;
 
         user.Email = request.NewEmail;

@@ -33,4 +33,10 @@ public class RefreshTokenRepository(PetShelterDbContext context) : IRefreshToken
         context.RefreshTokens.RemoveRange(tokens);
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(RefreshToken token)
+    {
+        context.RefreshTokens.Remove(token);
+        await context.SaveChangesAsync();
+    }
 }

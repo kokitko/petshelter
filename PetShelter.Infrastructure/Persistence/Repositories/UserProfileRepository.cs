@@ -31,4 +31,11 @@ public class UserProfileRepository(PetShelterDbContext context) : IUserProfileRe
 
         return profile;
     }
+
+
+    public async Task DeleteAsync(UserProfile profile)
+    {
+        context.UserProfiles.Remove(profile);
+        await context.SaveChangesAsync();
+    }
 }

@@ -8,4 +8,5 @@ public interface IAppUserRepository
     Task UpdateAsync(AppUser user);
     Task<AppUser?> GetByEmailAsync(string email);
     Task<AppUser?> GetByIdAsync(Guid id);
+    Task DeleteAsync(AppUser user);
 }

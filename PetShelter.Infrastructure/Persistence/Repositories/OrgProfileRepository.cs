@@ -24,4 +24,10 @@ public class OrgProfileRepository(PetShelterDbContext context) : IOrgProfileRepo
         context.OrgProfiles.Update(profile);
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(OrgProfile profile)
+    {
+        context.OrgProfiles.Remove(profile);
+        await context.SaveChangesAsync();
+    }
 }

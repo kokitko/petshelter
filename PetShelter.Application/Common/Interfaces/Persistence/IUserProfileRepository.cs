@@ -7,4 +7,5 @@ public interface IUserProfileRepository
     Task<DomainUserProfile?> GetByIdAsync(Guid id);
     Task AddAsync(DomainUserProfile profile);
     Task UpdateAsync(DomainUserProfile profile);
+    Task DeleteAsync(DomainUserProfile profile);
 }
