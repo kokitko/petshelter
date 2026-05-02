@@ -42,6 +42,7 @@ public static class DependencyInjection
         services.AddScoped<IOrgProfileRepository, OrgProfileRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IPetImageRepository, PetImageRepository>();
         services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         

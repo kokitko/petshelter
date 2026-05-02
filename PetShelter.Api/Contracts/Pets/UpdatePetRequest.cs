@@ -1,11 +1,12 @@
 namespace PetShelter.Api.Contracts.Pets;
 
-public record CreatePetResponse(
-    string Id,
+public record UpdatePetRequest(
     string Name,
     string Species,
     string Breed,
     int Age,
     string Description,
-    List<string> PictureUrls
+    IFormFile? MainPicture,
+    List<IFormFile>? PicturesToAdd,
+    List<Guid>? PictureIdsToRemove
 );

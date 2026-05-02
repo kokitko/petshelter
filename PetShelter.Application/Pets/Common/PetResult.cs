@@ -1,6 +1,6 @@
 namespace PetShelter.Application.Pets.Common;
 
-public record CreatePetResult(
+public record PetResult(
     Guid Id,
     Guid OwnerId,
     string Name,
@@ -8,6 +8,5 @@ public record CreatePetResult(
     string Breed,
     int Age,
     string Description,
-    PetImageResult MainPicture,
-    List<PetImageResult> PictureUrls
+    List<PetImageResult> PicturesInfo
 );

@@ -36,4 +36,9 @@ public class PetRepository(PetShelterDbContext context) : IPetRepository
         
         return (items, totalCount);
     }
+
+    public async Task SaveChangesAsync()
+    {
+        await context.SaveChangesAsync();
+    }
 }

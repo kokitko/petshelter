@@ -3,6 +3,7 @@ using MediatR;
 using PetShelter.Application.Pets.Queries;
 using PetShelter.Api.Contracts.Pets;
 using PetShelter.Application.Pets.Commands.CreatePetCommand;
+using PetShelter.Application.Pets.Commands.UpdatePetCommand;
 
 namespace PetShelter.Api.Controllers
 {
@@ -29,19 +30,59 @@ namespace PetShelter.Api.Controllers
                 request.Breed,
                 request.Age,
                 request.Description,
-                request.Picture
+                request.MainPicture,
+                request.PicturesToAdd
             );
 
             var result = await sender.Send(command);
             return result.Match(
-                pet => Ok(new CreatePetResponse(
+                pet => Ok(new PetResponse(
                     pet.Id.ToString(),
+                    pet.OwnerId.ToString(),
                     pet.Name,
                     pet.Species,
                     pet.Breed,
                     pet.Age,
                     pet.Description,
-                    pet.PictureUrls
+                    pet.PicturesInfo.Select(url => new PetImageResponse(
+                        url.Id.ToString(),
+                        url.IsMain,
+                        url.Url
+                    )).ToList()
+                )),
+                error => Problem(error)
+            );
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePet(Guid id, [FromForm] UpdatePetRequest request)
+        {
+            var command = new UpdatePetCommand(
+                id,
+                request.Name,
+                request.Species,
+                request.Breed,
+                request.Age,
+                request.Description,
+                request.MainPicture,
+                request.PicturesToAdd,
+                request.PictureIdsToRemove
+            );
+
+            var result = await sender.Send(command);
+            return result.Match(
+                pet => Ok(new PetResponse(
+                    pet.Id.ToString(),
+                    pet.OwnerId.ToString(),
+                    pet.Name,
+                    pet.Species,
+                    pet.Breed,
+                    pet.Age,
+                    pet.Description,
+                    pet.PicturesInfo.Select(url => new PetImageResponse(
+                        url.Id.ToString(),
+                        url.IsMain,
+                        url.Url
+                    )).ToList()
                 )),
                 error => Problem(error)
             );

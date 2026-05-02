@@ -11,5 +11,6 @@ public record CreatePetCommand(
     string Breed,
     int Age,
     string Description,
-    List<IFormFile> Picture
-) : IRequest<ErrorOr<CreatePetResult>>;
+    IFormFile MainPicture,
+    List<IFormFile>? PicturesToAdd
+) : IRequest<ErrorOr<PetResult>>;

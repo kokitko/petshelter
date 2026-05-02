@@ -20,9 +20,9 @@ public static partial class PetMapper
     [MapperIgnoreTarget(nameof(Pet.UpdatedAt))]
     [MapperIgnoreTarget(nameof(Pet.Applications))]
     public static partial Pet ToPet(this CreatePetCommand request);
-    [MapProperty(nameof(Pet.Images), nameof(CreatePetResult.PictureUrls))]
-    public static partial CreatePetResult ToCreatePetResult(this Pet pet);
-    private static string PetImageToString(PetImage petImage) => petImage.Url;
+    [MapProperty(nameof(Pet.Images), nameof(PetResult.PicturesInfo))]
+    public static partial PetResult ToPetResult(this Pet pet);
+    private static PetImageResult PetImageToPetImageResult(PetImage petImage) => new PetImageResult(petImage.Id, petImage.IsMain, petImage.Url);
     public static partial IQueryable<PetResponse> ProjectToPetResponse(this IQueryable<Pet> q);
 #pragma warning restore RMG012
 }

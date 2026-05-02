@@ -14,9 +14,9 @@ public class CreatePetCommandHandler(
     IPetRepository petRepository,
     IFileStorageService fileStorageService,
     ICurrentUserProvider currentUserProvider
-) : IRequestHandler<CreatePetCommand, ErrorOr<CreatePetResult>>
+) : IRequestHandler<CreatePetCommand, ErrorOr<PetResult>>
 {
-    public async Task<ErrorOr<CreatePetResult>> Handle(CreatePetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<PetResult>> Handle(CreatePetCommand request, CancellationToken cancellationToken)
     {
         string userId = currentUserProvider.GetCurrentUserId()?.ToString() ?? string.Empty;
         if (string.IsNullOrEmpty(userId))
@@ -27,25 +27,41 @@ public class CreatePetCommandHandler(
         pet.OwnerId = Guid.Parse(userId);
 
         pet.Images = new List<PetImage>();
-        foreach (var picture in request.Picture)
-        {
-            string imageUrl = await fileStorageService.UploadFileAsync(
-                picture, 
-                $"{pet.Id}_{picture.FileName}", 
-                picture.ContentType);
 
-            if (!string.IsNullOrEmpty(imageUrl))
+        string mainImageUrl = await fileStorageService.UploadFileAsync(
+            request.MainPicture, 
+            $"{pet.Id}_{request.MainPicture.FileName}", 
+            request.MainPicture.ContentType);
+
+        pet.Images.Add(new PetImage
+        {
+            Id = Guid.NewGuid(),
+            PetId = pet.Id,
+            Url = mainImageUrl,
+            IsMain = true
+        });
+
+        if (request.PicturesToAdd != null)
+            foreach (var picture in request.PicturesToAdd)
             {
-                pet.Images.Add(new PetImage
+                string imageUrl = await fileStorageService.UploadFileAsync(
+                    picture, 
+                    $"{pet.Id}_{picture.FileName}", 
+                    picture.ContentType);
+
+                if (!string.IsNullOrEmpty(imageUrl))
                 {
-                    Id = Guid.NewGuid(),
-                    PetId = pet.Id,
-                    Url = imageUrl
-                });
+                    pet.Images.Add(new PetImage
+                    {
+                        Id = Guid.NewGuid(),
+                        PetId = pet.Id,
+                        Url = imageUrl,
+                        IsMain = false
+                    });
+                }
             }
-        }
 
         await petRepository.AddAsync(pet);
-        return pet.ToCreatePetResult();
+        return pet.ToPetResult();
     }
 }

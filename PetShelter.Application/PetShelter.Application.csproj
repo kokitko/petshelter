@@ -22,6 +22,7 @@
     <Folder Include="OrgProfiles\Queries\" />
     <Folder Include="Pets\Commands\" />
     <Folder Include="Pets\Commands\CreatePetCommand\" />
+    <Folder Include="Pets\Commands\UpdatePetCommand\" />
     <Folder Include="Pets\Common\" />
     <Folder Include="UserProfiles\" />
     <Folder Include="UserProfiles\Common\" />
