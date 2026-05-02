@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Domain.Entities;
 
@@ -27,11 +28,12 @@ public class UserProfileRepository(PetShelterDbContext context) : IUserProfileRe
 
     public async Task<UserProfile?> GetByUserIdAsync(Guid userId)
     {
-        var profile = await context.UserProfiles.FindAsync(userId);
+        var profile = await context.UserProfiles
+            .Include(p => p.User)
+            .FirstOrDefaultAsync(p => p.UserId == userId);
 
         return profile;
     }
-
 
     public async Task DeleteAsync(UserProfile profile)
     {

@@ -1,4 +1,4 @@
-namespace PetShelter.Application.Pets.Common;
+namespace PetShelter.Application.Dtos.Pet;
 
 public record PetImageResult(
     Guid Id,

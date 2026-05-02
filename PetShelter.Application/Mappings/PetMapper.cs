@@ -2,7 +2,6 @@ using PetShelter.Domain.Entities;
 using PetShelter.Application.Dtos.Pet;
 using Riok.Mapperly.Abstractions;
 using PetShelter.Application.Pets.Commands.CreatePetCommand;
-using PetShelter.Application.Pets.Common;
 
 namespace PetShelter.Application.Mappings;
 
@@ -10,9 +9,6 @@ namespace PetShelter.Application.Mappings;
 public static partial class PetMapper
 {
 #pragma warning disable RMG012
-    [MapProperty("Owner.Email", nameof(PetResponse.OwnerName))]
-    [MapProperty(nameof(Pet.Images), nameof(PetResponse.ImageUrls))]
-    public static partial PetResponse ToPetResponse(this Pet pet);
     [MapperIgnoreTarget(nameof(Pet.Id))]
     [MapperIgnoreTarget(nameof(Pet.Owner))]
     [MapperIgnoreTarget(nameof(Pet.Images))]
@@ -20,9 +16,9 @@ public static partial class PetMapper
     [MapperIgnoreTarget(nameof(Pet.UpdatedAt))]
     [MapperIgnoreTarget(nameof(Pet.Applications))]
     public static partial Pet ToPet(this CreatePetCommand request);
-    [MapProperty(nameof(Pet.Images), nameof(PetResult.PicturesInfo))]
-    public static partial PetResult ToPetResult(this Pet pet);
+    [MapProperty(nameof(Pet.Images), nameof(PetDto.Images))]
+    public static partial PetDto ToPetDto(this Pet pet);
+    public static partial IQueryable<PetDto> ToPetDto(this IQueryable<Pet> q);
     private static PetImageResult PetImageToPetImageResult(PetImage petImage) => new PetImageResult(petImage.Id, petImage.IsMain, petImage.Url);
-    public static partial IQueryable<PetResponse> ProjectToPetResponse(this IQueryable<Pet> q);
 #pragma warning restore RMG012
 }

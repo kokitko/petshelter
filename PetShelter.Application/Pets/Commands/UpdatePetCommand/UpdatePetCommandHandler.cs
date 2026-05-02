@@ -3,8 +3,8 @@ using MediatR;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
+using PetShelter.Application.Dtos.Pet;
 using PetShelter.Application.Mappings;
-using PetShelter.Application.Pets.Common;
 using PetShelter.Domain.Common.Errors;
 using PetShelter.Domain.Entities;
 
@@ -15,9 +15,9 @@ public class UpdatePetCommandHandler(
     ICurrentUserProvider currentUserProvider,
     IFileStorageService fileStorageService,
     IPetImageRepository petImageRepository
-) : IRequestHandler<UpdatePetCommand, ErrorOr<PetResult>>
+) : IRequestHandler<UpdatePetCommand, ErrorOr<PetDto>>
 {
-    public async Task<ErrorOr<PetResult>> Handle(UpdatePetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<PetDto>> Handle(UpdatePetCommand request, CancellationToken cancellationToken)
     {
         var currentUserId = currentUserProvider.GetCurrentUserId();
 
@@ -101,6 +101,6 @@ public class UpdatePetCommandHandler(
 
         await petRepository.SaveChangesAsync();
 
-        return pet.ToPetResult();
+        return pet.ToPetDto();
     }
 }

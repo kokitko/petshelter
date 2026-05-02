@@ -34,9 +34,8 @@
     <Folder Include="Pets\Commands\CreatePetCommand\" />
     <Folder Include="Pets\Commands\UpdatePetCommand\" />
     <Folder Include="Pets\Common\" />
-    <Folder Include="UserProfiles\" />
     <Folder Include="UserProfiles\Common\" />
-    <Folder Include="UserProfiles\Queries\" />
+    <Folder Include="UserProfiles\Queries\GetUserPetsQuery\" />
   </ItemGroup>
 
   <ItemGroup>

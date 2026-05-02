@@ -8,4 +8,4 @@ public record GetPetsPagedQuery(
     int PageNumber,
     int PageSize,
     string? Species
-) : IRequest<ErrorOr<PagedList<PetResponse>>>;
+) : IRequest<ErrorOr<PagedList<PetDto>>>;

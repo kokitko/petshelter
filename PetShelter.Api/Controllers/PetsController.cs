@@ -44,7 +44,7 @@ namespace PetShelter.Api.Controllers
                     pet.Breed,
                     pet.Age,
                     pet.Description,
-                    pet.PicturesInfo.Select(url => new PetImageResponse(
+                    pet.Images.Select(url => new PetImageResponse(
                         url.Id.ToString(),
                         url.IsMain,
                         url.Url
@@ -78,10 +78,10 @@ namespace PetShelter.Api.Controllers
                     pet.Breed,
                     pet.Age,
                     pet.Description,
-                    pet.PicturesInfo.Select(url => new PetImageResponse(
-                        url.Id.ToString(),
-                        url.IsMain,
-                        url.Url
+                    pet.Images.Select(img => new PetImageResponse(
+                        img.Id.ToString(),
+                        img.IsMain,
+                        img.Url
                     )).ToList()
                 )),
                 error => Problem(error)

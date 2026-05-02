@@ -1,12 +1,12 @@
 using MediatR;
 using ErrorOr;
-using PetShelter.Application.Pets.Common;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Domain.Common.Errors;
 using PetShelter.Application.Mappings;
 using PetShelter.Domain.Entities;
+using PetShelter.Application.Dtos.Pet;
 
 namespace PetShelter.Application.Pets.Commands.CreatePetCommand;
 
@@ -14,9 +14,9 @@ public class CreatePetCommandHandler(
     IPetRepository petRepository,
     IFileStorageService fileStorageService,
     ICurrentUserProvider currentUserProvider
-) : IRequestHandler<CreatePetCommand, ErrorOr<PetResult>>
+) : IRequestHandler<CreatePetCommand, ErrorOr<PetDto>>
 {
-    public async Task<ErrorOr<PetResult>> Handle(CreatePetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<PetDto>> Handle(CreatePetCommand request, CancellationToken cancellationToken)
     {
         string userId = currentUserProvider.GetCurrentUserId()?.ToString() ?? string.Empty;
         if (string.IsNullOrEmpty(userId))
@@ -62,6 +62,6 @@ public class CreatePetCommandHandler(
             }
 
         await petRepository.AddAsync(pet);
-        return pet.ToPetResult();
+        return pet.ToPetDto();
     }
 }

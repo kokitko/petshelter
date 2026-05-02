@@ -1,8 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using PetShelter.Application.Pets.Common;
-
+using PetShelter.Application.Dtos.Pet;
 namespace PetShelter.Application.Pets.Commands.UpdatePetCommand;
 
 public record UpdatePetCommand(
@@ -15,4 +14,4 @@ public record UpdatePetCommand(
     IFormFile? MainPicture,
     List<IFormFile>? PicturesToAdd,
     List<Guid>? PictureIdsToRemove
-) : IRequest<ErrorOr<PetResult>>;
+) : IRequest<ErrorOr<PetDto>>;

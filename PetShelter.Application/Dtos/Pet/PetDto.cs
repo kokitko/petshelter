@@ -1,6 +1,6 @@
-namespace PetShelter.Application.Pets.Common;
+namespace PetShelter.Application.Dtos.Pet;
 
-public record PetResult(
+public record PetDto(
     Guid Id,
     Guid OwnerId,
     string Name,
@@ -8,5 +8,5 @@ public record PetResult(
     string Breed,
     int Age,
     string Description,
-    List<PetImageResult> PicturesInfo
+    List<PetImageResult> Images
 );
