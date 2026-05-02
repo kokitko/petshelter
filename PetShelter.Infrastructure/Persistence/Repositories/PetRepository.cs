@@ -21,12 +21,27 @@ public class PetRepository(PetShelterDbContext context) : IPetRepository
         return pet;
     }
 
-    public async Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, string? species)
+    public async Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(
+        int pageNumber, 
+        int pageSize, 
+        string? species, 
+        string? breed,
+        string? name,
+        int? age,
+        Guid? ownerId)
     {
         var query = context.Pets.AsNoTracking().AsQueryable();
 
+        if (ownerId.HasValue)
+            query = query.Where(p => p.OwnerId == ownerId.Value);
         if (!string.IsNullOrEmpty(species))
-            query = query.Where(p => p.Species == species);
+            query = query.Where(p => p.Species.Contains(species));
+        if (!string.IsNullOrEmpty(breed))
+            query = query.Where(p => p.Breed.Contains(breed));
+        if (!string.IsNullOrEmpty(name))
+            query = query.Where(p => p.Name.Contains(name));
+        if (age.HasValue)
+            query = query.Where(p => p.Age == age.Value);
 
         var totalCount = await query.CountAsync();
         var items = await query

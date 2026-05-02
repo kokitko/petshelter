@@ -4,7 +4,14 @@ namespace PetShelter.Application.Common.Interfaces.Persistence;
 
 public interface IPetRepository
 {
-    Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, string? species);
+    Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(
+        int pageNumber, 
+        int pageSize, 
+        string? species, 
+        string? breed,
+        string? name,
+        int? age,
+        Guid? ownerId);
     Task<Pet?> GetByIdAsync(Guid id);
     Task AddAsync(Pet pet);
     Task SaveChangesAsync();

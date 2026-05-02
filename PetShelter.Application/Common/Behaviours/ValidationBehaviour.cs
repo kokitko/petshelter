@@ -21,7 +21,7 @@ public class ValidationBehaviour<TRequest, TResponse>(
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         
         if (validationResult.IsValid)
-             return await next();
+            return await next();
 
         var errors = validationResult.Errors
             .Select(validationFailure => Error.Validation(

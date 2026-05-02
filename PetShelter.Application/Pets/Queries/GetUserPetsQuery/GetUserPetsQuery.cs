@@ -1,10 +1,12 @@
+using ErrorOr;
 using MediatR;
 using PetShelter.Application.Common.Models;
 using PetShelter.Application.Dtos.Pet;
-using ErrorOr;
-namespace PetShelter.Application.Pets.Queries;
 
-public record GetPetsPagedQuery(
+namespace PetShelter.Application.Pets.Queries.GetUserPetsQuery;
+
+public record GetUserPetsQuery(
+    Guid UserId,
     string? Name = null,
     string? Species = null,
     string? Breed = null,

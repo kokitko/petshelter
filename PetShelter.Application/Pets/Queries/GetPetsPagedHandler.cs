@@ -11,11 +11,11 @@ public class GetPetsPagedHandler(IPetRepository repository) : IRequestHandler<Ge
 {
     public async Task<ErrorOr<PagedList<PetDto>>> Handle(GetPetsPagedQuery request, CancellationToken ct)
     {
-        var (items, totalCount) = await repository.GetPagedAsync(
-            request.PageNumber, request.PageSize, request.Species);
+        var (pets, totalCount) = await repository.GetPagedAsync(
+            request.Page, request.PageSize, request.Species, request.Breed, request.Name, request.Age, null);
 
-        var dtos = items.Select(p => p.ToPetDto()).ToList();
+        var dtos = pets.Select(p => p.ToPetDto()).ToList();
 
-        return new PagedList<PetDto>(dtos, totalCount, request.PageNumber, request.PageSize);
+        return new PagedList<PetDto>(dtos, totalCount, request.Page, request.PageSize);
     }
 }

@@ -30,12 +30,12 @@
     <Folder Include="OrgProfiles\" />
     <Folder Include="OrgProfiles\Common\" />
     <Folder Include="OrgProfiles\Queries\" />
+    <Folder Include="OrgProfiles\Queries\GetOrgProfileQuery\" />
     <Folder Include="Pets\Commands\" />
     <Folder Include="Pets\Commands\CreatePetCommand\" />
     <Folder Include="Pets\Commands\UpdatePetCommand\" />
     <Folder Include="Pets\Common\" />
     <Folder Include="UserProfiles\Common\" />
-    <Folder Include="UserProfiles\Queries\GetUserPetsQuery\" />
   </ItemGroup>
 
   <ItemGroup>
