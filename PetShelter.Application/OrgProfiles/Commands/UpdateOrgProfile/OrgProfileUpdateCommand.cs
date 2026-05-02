@@ -6,7 +6,6 @@ using PetShelter.Application.Dtos.Users;
 namespace PetShelter.Application.OrgProfiles.Commands.UpdateOrgProfile;
 
 public record OrgProfileUpdateCommand(
-    string Email,
     string? PhoneNumber,
     IFormFile? ProfilePicture,
     string OrgName,

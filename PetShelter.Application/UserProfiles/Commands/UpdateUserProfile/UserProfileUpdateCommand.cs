@@ -6,7 +6,6 @@ using PetShelter.Application.Dtos.Users;
 namespace PetShelter.Application.UserProfiles.Commands.UpdateUserProfile;
 
 public record UserProfileUpdateCommand(
-    string Email,
     string? PhoneNumber,
     IFormFile? ProfilePicture,
     string FirstName,

@@ -27,11 +27,6 @@ public class UserProfileUpdateCommandHandler(
         if (user.Role != Domain.Entities.UserRole.User)
             return Errors.Authentication.Forbidden;
 
-        if (userRepository.GetByEmailAsync(request.Email).Result is not null && user.Email != request.Email)
-            return Errors.Authentication.DuplicateEmail;
-        
-        user.Email = request.Email;
-
         user.PhoneNumber = request.PhoneNumber;
         if (request.ProfilePicture != null)
         {

@@ -14,5 +14,9 @@ public static partial class Errors
             code: "Pets.TooManyImages",
             description: "A pet cannot have more than 10 images."
         );
+        public static Error NotAvailableForAdoption => Error.Conflict(
+            code: "Pets.NotAvailableForAdoption",
+            description: "This pet is not available for adoption."
+        );
     }
 }

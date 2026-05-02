@@ -6,9 +6,6 @@ public class OrgProfileUpdateCommandValidator : AbstractValidator<OrgProfileUpda
 {
     public OrgProfileUpdateCommandValidator()
     {
-        RuleFor(x => x.Email)
-            .EmailAddress().WithMessage("Email must be a valid email address.");
-
         RuleFor(x => x.PhoneNumber)
             .Matches(@"^\+?[1-9]\d{1,14}$")
             .When(x => !string.IsNullOrEmpty(x.PhoneNumber))

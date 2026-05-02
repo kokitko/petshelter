@@ -5,6 +5,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Accounts\" />
+    <Folder Include="Accounts\Commands\" />
+    <Folder Include="Accounts\Commands\ChangeEmailCommand\" />
+    <Folder Include="Accounts\Commands\ChangePasswordCommand\" />
+    <Folder Include="Accounts\Common\" />
+    <Folder Include="Accounts\Queries\" />
+    <Folder Include="AdoptionApplications\Commands\" />
+    <Folder Include="AdoptionApplications\Commands\CreateAdoptionApplicationCommand\" />
+    <Folder Include="AdoptionApplications\Queries\" />
     <Folder Include="Authentication\Commands\Login\" />
     <Folder Include="Authentication\Commands\RefreshToken\" />
     <Folder Include="Authentication\Common\" />
@@ -27,7 +36,6 @@
     <Folder Include="UserProfiles\" />
     <Folder Include="UserProfiles\Common\" />
     <Folder Include="UserProfiles\Queries\" />
-    <Folder Include="Users\" />
   </ItemGroup>
 
   <ItemGroup>

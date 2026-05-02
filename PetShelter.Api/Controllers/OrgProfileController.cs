@@ -13,7 +13,6 @@ namespace PetShelter.Api.Controllers
         public async Task<IActionResult> UpdateOrgProfile([FromForm] OrgProfileUpdateRequest request)
         {
             var command = new OrgProfileUpdateCommand(
-                request.Email,
                 request.PhoneNumber,
                 request.ProfilePicture,
                 request.OrgName,

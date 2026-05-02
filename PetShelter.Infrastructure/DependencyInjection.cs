@@ -43,6 +43,7 @@ public static class DependencyInjection
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IPetImageRepository, PetImageRepository>();
+        services.AddScoped<IAdoptionApplicationRepository, AdoptionApplicationRepository>();
         services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         

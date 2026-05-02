@@ -26,4 +26,11 @@ public class RefreshTokenRepository(PetShelterDbContext context) : IRefreshToken
     {
         return await context.RefreshTokens.FirstOrDefaultAsync(rt => rt.Token == token);
     }
+
+    public async Task DeleteByUserIdAsync(Guid userId)
+    {
+        var tokens = await context.RefreshTokens.Where(rt => rt.UserId == userId).ToListAsync();
+        context.RefreshTokens.RemoveRange(tokens);
+        await context.SaveChangesAsync();
+    }
 }

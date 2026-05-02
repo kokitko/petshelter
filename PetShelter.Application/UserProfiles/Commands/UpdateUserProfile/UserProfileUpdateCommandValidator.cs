@@ -6,9 +6,6 @@ public class UserProfileUpdateCommandValidator : AbstractValidator<UserProfileUp
 {
     public UserProfileUpdateCommandValidator()
     {
-        RuleFor(x => x.Email)
-            .EmailAddress().WithMessage("Email must be a valid email address.");
-
         RuleFor(x => x.PhoneNumber)
             .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("Phone number must be in a valid format.");
 
