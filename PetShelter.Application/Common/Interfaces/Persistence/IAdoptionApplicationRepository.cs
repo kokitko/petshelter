@@ -8,4 +8,6 @@ public interface IAdoptionApplicationRepository
     Task<AdoptionApplication?> GetByIdAsync(Guid id);
     Task SaveChangesAsync();
     Task DeleteAsync(AdoptionApplication application);
+    Task<AdoptionApplication?> GetApprovedByPetIdAsync(Guid petId);
+    List<AdoptionApplication> GetByPetId(Guid petId);
 }

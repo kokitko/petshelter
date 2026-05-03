@@ -6,6 +6,10 @@ public static partial class Errors
 {
     public static class Pets
     {
+        public static Error NotConfirmed => Error.Conflict(
+            code: "Pets.NotConfirmed",
+            description: "This pet has not been confirmed for adoption yet."
+        );
         public static Error NotFound => Error.NotFound(
             code: "Pets.NotFound",
             description: "The specified pet was not found."

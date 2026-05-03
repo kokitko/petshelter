@@ -41,9 +41,6 @@ public class CreateAdoptionApplicationCommandHandler(
 
         await adoptionApplicationRepository.AddAsync(adoptionApplication);
 
-        pet.Status = PetStatus.Pending;
-        await petRepository.SaveChangesAsync();
-
         return new ReturnAdoptionApplicationDto(
             adoptionApplication.Id,
             adoptionApplication.PetId,

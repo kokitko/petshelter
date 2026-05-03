@@ -14,8 +14,13 @@
     <Folder Include="Accounts\Queries\" />
     <Folder Include="Accounts\Queries\GetAccountInfoQuery\" />
     <Folder Include="AdoptionApplications\Commands\" />
+    <Folder Include="AdoptionApplications\Commands\ConfirmAdoptionApplicationsCommand\" />
     <Folder Include="AdoptionApplications\Commands\CreateAdoptionApplicationCommand\" />
+    <Folder Include="AdoptionApplications\Commands\RejectAdoptionApplicationCommand\" />
     <Folder Include="AdoptionApplications\Queries\" />
+    <Folder Include="AdoptionApplications\Queries\GetAdoptionApplicaitonByIdQuery\" />
+    <Folder Include="AdoptionApplications\Queries\GetMyAdoptionApplicationsQuery\" />
+    <Folder Include="AdoptionApplications\Queries\GetMyPetsAdoptionApplicationsQuery\" />
     <Folder Include="Authentication\Commands\Login\" />
     <Folder Include="Authentication\Commands\RefreshToken\" />
     <Folder Include="Authentication\Common\" />
@@ -30,6 +35,7 @@
     <Folder Include="Dtos\Pet\" />
     <Folder Include="OrgProfiles\Common\" />
     <Folder Include="Pets\Commands\" />
+    <Folder Include="Pets\Commands\ConfirmPetCommand\" />
     <Folder Include="Pets\Commands\CreatePetCommand\" />
     <Folder Include="Pets\Commands\UpdatePetCommand\" />
     <Folder Include="Pets\Common\" />

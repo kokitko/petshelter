@@ -34,4 +34,23 @@ public class AdoptionApplicationRepository(
         context.AdoptionApplications.Remove(application);
         await context.SaveChangesAsync();
     }
+
+    public Task<AdoptionApplication?> GetApprovedByPetIdAsync(Guid petId)
+    {
+        var application = context.AdoptionApplications
+            .Include(a => a.Pet)
+            .Include(a => a.Applicant)
+            .FirstOrDefault(a => a.PetId == petId && a.Status == ApplicationStatus.Approved);
+
+        return Task.FromResult(application);
+    }
+
+    public List<AdoptionApplication> GetByPetId(Guid petId)
+    {
+        var applications = context.AdoptionApplications
+            .Where(a => a.PetId == petId)
+            .ToList();
+
+        return applications;
+    }
 }

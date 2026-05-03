@@ -6,12 +6,23 @@ using PetShelter.Application.Pets.Queries.GetUserPetsQuery;
 using PetShelter.Application.Pets.Queries.GetPetByIdQuery;
 using PetShelter.Application.Pets.Queries.GetPetsQuery;
 using PetShelter.Api.Mappings.Pets;
+using PetShelter.Application.Pets.Commands.ConfirmPetCommand;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/pets")]
     public class PetsController(ISender sender) : ApiController
     {
+        [HttpPut("{id}/confirm")]
+        public async Task<IActionResult> ConfirmPet(Guid id)
+        {
+            var command = new ConfirmPetCommand(id);
+            var result = await sender.Send(command);
+            return result.Match(
+                success => Ok(success),
+                error => Problem(error)
+            );
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPetById(Guid id)
         {
