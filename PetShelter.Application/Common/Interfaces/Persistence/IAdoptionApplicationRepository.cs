@@ -8,6 +8,8 @@ public interface IAdoptionApplicationRepository
     Task<AdoptionApplication?> GetByIdAsync(Guid id);
     Task SaveChangesAsync();
     Task DeleteAsync(AdoptionApplication application);
+    Task<IEnumerable<AdoptionApplication>> GetByPetIdAsync(Guid petId);
     Task<AdoptionApplication?> GetApprovedByPetIdAsync(Guid petId);
-    List<AdoptionApplication> GetByPetId(Guid petId);
+    Task<(List<AdoptionApplication>, int)> GetByApplicantIdAsync(Guid applicantId, ApplicationStatus? status, int pageNumber, int pageSize);
+    Task<(List<AdoptionApplication>, int)> GetByOwnerIdAsync(Guid ownerId, ApplicationStatus? status, int pageNumber, int pageSize);
 }

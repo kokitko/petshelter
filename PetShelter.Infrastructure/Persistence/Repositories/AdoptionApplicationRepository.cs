@@ -35,22 +35,58 @@ public class AdoptionApplicationRepository(
         await context.SaveChangesAsync();
     }
 
-    public Task<AdoptionApplication?> GetApprovedByPetIdAsync(Guid petId)
+    public async Task<AdoptionApplication?> GetApprovedByPetIdAsync(Guid petId)
     {
-        var application = context.AdoptionApplications
+        var application = await context.AdoptionApplications
             .Include(a => a.Pet)
             .Include(a => a.Applicant)
-            .FirstOrDefault(a => a.PetId == petId && a.Status == ApplicationStatus.Approved);
+            .FirstOrDefaultAsync(a => a.PetId == petId && a.Status == ApplicationStatus.Approved);
 
-        return Task.FromResult(application);
+        return application;
     }
 
-    public List<AdoptionApplication> GetByPetId(Guid petId)
+    public async Task<IEnumerable<AdoptionApplication>> GetByPetIdAsync(Guid petId)
     {
-        var applications = context.AdoptionApplications
+        var applications = await context.AdoptionApplications
             .Where(a => a.PetId == petId)
-            .ToList();
+            .ToListAsync();
 
         return applications;
+    }
+
+    public async Task<(List<AdoptionApplication>, int)> GetByApplicantIdAsync(Guid applicantId, ApplicationStatus? status, int pageNumber, int pageSize)
+    {
+        var query = context.AdoptionApplications
+            .Where(a => a.ApplicantId == applicantId);
+
+        if (status.HasValue)
+            query = query.Where(a => a.Status == status);
+
+        var applications = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var totalCount = await query.CountAsync();
+
+        return (applications, totalCount);
+    }
+
+    public async Task<(List<AdoptionApplication>, int)> GetByOwnerIdAsync(Guid ownerId, ApplicationStatus? status, int pageNumber, int pageSize)
+    {
+        var query = context.AdoptionApplications
+            .Where(a => a.Pet.OwnerId == ownerId);
+
+        if (status.HasValue)
+            query = query.Where(a => a.Status == status);
+
+        var applications = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var totalCount = await query.CountAsync();
+
+        return (applications, totalCount);
     }
 }

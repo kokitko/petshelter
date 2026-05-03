@@ -30,7 +30,7 @@ public class ConfirmPetCommandHandler(
         pet.Status = PetStatus.Adopted;
         await petRepository.SaveChangesAsync();
 
-        var applicationsToReject = adoptionApplicationRepository.GetByPetId(request.Id)
+        var applicationsToReject = (await adoptionApplicationRepository.GetByPetIdAsync(request.Id))
             .Where(app => app.Id != confirmedApplication.Id)
             .ToList();
 

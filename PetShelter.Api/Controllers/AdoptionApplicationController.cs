@@ -6,12 +6,50 @@ using PetShelter.Application.AdoptionApplications.Commands.ConfirmAdoptionApplic
 using PetShelter.Application.AdoptionApplications.Commands.CreateAdoptionApplicationCommand;
 using PetShelter.Application.AdoptionApplications.Commands.RejectAdoptionApplicationCommand;
 using PetShelter.Application.AdoptionApplications.Queries.GetAdoptionApplicaitonByIdQuery;
+using PetShelter.Application.AdoptionApplications.Queries.GetMyAdoptionApplicationsQuery;
+using PetShelter.Application.AdoptionApplications.Queries.GetMyPetsAdoptionApplicationsQuery;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
     public class AdoptionApplicationController(ISender sender) : ApiController
     {
+        [HttpGet("my-applications")]
+        public async Task<IActionResult> GetMyAdoptionApplications(
+            [FromQuery] string? status,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10
+        )
+        {
+            var query = new GetMyAdoptionApplicationsQuery(
+                status,
+                pageNumber,
+                pageSize
+            );
+            var result = await sender.Send(query);
+            return result.Match(
+                success => Ok(success.ToPagedListResponse()),
+                error => Problem(error)
+            );
+        }
+        [HttpGet("my-pets-applications")]
+        public async Task<IActionResult> GetMyPetsAdoptionApplications(
+            [FromQuery] string? status,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10
+        )
+        {
+            var query = new GetMyPetsAdoptionApplicationQuery(
+                status,
+                pageNumber,
+                pageSize
+            );
+            var result = await sender.Send(query);
+            return result.Match(
+                success => Ok(success.ToPagedListResponse()),
+                error => Problem(error)
+            );
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdoptionApplicationById(Guid id)
         {
