@@ -29,6 +29,10 @@
     <Folder Include="Contracts\AdoptionApplication\" />
     <Folder Include="Controllers\" />
     <Folder Include="Http\" />
+    <Folder Include="Mappings\AdoptionApplications\" />
+    <Folder Include="Mappings\Authentication\" />
+    <Folder Include="Mappings\Pets\" />
+    <Folder Include="Mappings\Users\" />
   </ItemGroup>
 
 </Project>

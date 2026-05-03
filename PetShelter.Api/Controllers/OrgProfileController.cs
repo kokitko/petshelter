@@ -1,65 +1,43 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PetShelter.Api.Contracts.OrgProfile;
-using PetShelter.Application.OrgProfiles.Commands.UpdateOrgProfile;
-using PetShelter.Application.OrgProfiles.Queries.GetOrgProfileQuery;
+using PetShelter.Api.Mappings.Organizations;
+using PetShelter.Application.OrgProfiles.Queries.GetOrganizationsQuery;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
     public class OrgProfileController(ISender sender) : ApiController
     {
-        [HttpGet("/{id}/pets")]
-        public async Task<IActionResult> GetOrgPets(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> GetOrgProfiles(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? orgName = null,
+            [FromQuery] string? address = null
+        )
         {
-            return Ok();
-        }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrgProfile(Guid id)
-        {
-            var query = new GetOrgProfileQuery(id);
+            var query = new GetOrganizationsQuery(
+                orgName,
+                address,
+                pageNumber,
+                pageSize
+            );
             var result = await sender.Send(query);
+
             return result.Match(
-                success => Ok(
-                    new OrgProfileResponse(
-                        success.Id.ToString(),
-                        success.OrgProfile!.OrgName,
-                        success.OrgProfile!.Address,
-                        success.OrgProfile!.Website,
-                        success.Email,
-                        success.PhoneNumber,
-                        success.ProfilePictureUrl,
-                        success.Role
-                    )
-                ),
+                success => Ok(success.ToPagedListResponse()),
                 error => Problem(error)
             );
         }
         [HttpPut("update")]
         public async Task<IActionResult> UpdateOrgProfile([FromForm] OrgProfileUpdateRequest request)
         {
-            var command = new OrgProfileUpdateCommand(
-                request.PhoneNumber,
-                request.ProfilePicture,
-                request.OrgName,
-                request.Address,
-                request.Website
-            );
+            var command = request.ToOrgProfileUpdateCommand();
 
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(
-                    new OrgProfileResponse(
-                        success.Id.ToString(),
-                        success.OrgProfile!.OrgName,
-                        success.OrgProfile!.Address,
-                        success.OrgProfile!.Website,
-                        success.Email,
-                        success.PhoneNumber,
-                        success.ProfilePictureUrl,
-                        success.Role
-                    )
-                ),
+                success => Ok(success.ToOrgProfileResponse()),
                 error => Problem(error)
             );
         }

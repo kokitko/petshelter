@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using PetShelter.Application.Authentication.Commands;
 using PetShelter.Api.Contracts.Authentication;
 using PetShelter.Application.Authentication.Commands.Login;
 using PetShelter.Application.Authentication.Commands.RefreshToken;
+using PetShelter.Api.Mappings.Authentication;
 
 namespace PetShelter.Api.Controllers
 {
@@ -13,40 +13,15 @@ namespace PetShelter.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var command = new RegisterUserCommand(
-                request.Email,
-                request.Password,
-                request.PhoneNumber,
+            var command = request.ToRegisterUserCommand();
 
-                request.OrgProfile is not null
-                    ? new OrgProfileInfo(
-                        request.OrgProfile.OrgName,
-                        request.OrgProfile.Address,
-                        request.OrgProfile.Website)
-                    : null,
-
-                request.UserProfile is not null
-                    ? new UserProfileInfo(
-                        request.UserProfile.FirstName,
-                        request.UserProfile.LastName)
-                    : null
-
-            );
             var result = await sender.Send(command);
 
             return result.Match(
                 authResult =>
                 {
                     SetRefreshTokenCookie(authResult.RefreshToken, Response);
-                    var response = new AuthResponse(
-                        authResult.AccessToken,
-                        new UserAuthResponse(
-                            authResult.User.Id,
-                            authResult.User.Email,
-                            authResult.User.PhoneNumber,
-                            authResult.User.Role
-                        )
-                    );
+                    var response = authResult.ToAuthResponse();
                     return Ok(response);
                 },
                 errors => Problem(errors));
@@ -62,15 +37,7 @@ namespace PetShelter.Api.Controllers
                 authResult =>
                 {
                     SetRefreshTokenCookie(authResult.RefreshToken, Response);
-                    var response = new AuthResponse(
-                        authResult.AccessToken,
-                        new UserAuthResponse(
-                            authResult.User.Id,
-                            authResult.User.Email,
-                            authResult.User.PhoneNumber,
-                            authResult.User.Role
-                        )
-                    );
+                    var response = authResult.ToAuthResponse();
                     return Ok(response);
                 },
                 errors => Problem(errors));
@@ -91,15 +58,7 @@ namespace PetShelter.Api.Controllers
                 authResult =>
                 {
                     SetRefreshTokenCookie(authResult.RefreshToken, Response);
-                    var response = new AuthResponse(
-                        authResult.AccessToken,
-                        new UserAuthResponse(
-                            authResult.User.Id,
-                            authResult.User.Email,
-                            authResult.User.PhoneNumber,
-                            authResult.User.Role
-                        )
-                    );
+                    var response = authResult.ToAuthResponse();
                     return Ok(response);
                 },
                 errors => Problem(errors));

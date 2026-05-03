@@ -5,6 +5,7 @@ public record OrgProfileResponse(
     string OrgName,
     string Address,
     string? Website,
+    bool isVerified,
     string Email,
     string? PhoneNumber,
     string? ProfilePictureUrl,

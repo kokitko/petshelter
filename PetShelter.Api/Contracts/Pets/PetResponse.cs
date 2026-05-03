@@ -8,5 +8,5 @@ public record PetResponse(
     string Breed,
     int Age,
     string Description,
-    List<PetImageResponse> PictureUrls
+    List<PetImageResponse> Images
 );

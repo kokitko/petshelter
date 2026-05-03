@@ -1,6 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using PetShelter.Application.Authentication.Commands;
 using PetShelter.Domain.Entities;
+using PetShelter.Application.Dtos.Users;
 
 namespace PetShelter.Application.Mappings;
 
@@ -12,5 +13,6 @@ public static partial class OrgProfileMapper
     [MapperIgnoreTarget(nameof(OrgProfile.User))]
     [MapperIgnoreTarget(nameof(OrgProfile.IsVerified))]
     public static partial OrgProfile ToOrgProfile(this OrgProfileInfo dto);
+    public static partial ReturnOrgProfileInfo ToReturnOrgProfileInfo(this OrgProfile orgProfile);
 #pragma warning restore RMG012
 }

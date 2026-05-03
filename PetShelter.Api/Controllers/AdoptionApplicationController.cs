@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PetShelter.Api.Contracts.AdoptionApplication;
+using PetShelter.Api.Mappings.AdoptionApplications;
 using PetShelter.Application.AdoptionApplications.Commands.CreateAdoptionApplicationCommand;
 
 namespace PetShelter.Api.Controllers
@@ -18,15 +19,7 @@ namespace PetShelter.Api.Controllers
 
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(
-                    new AdoptionApplicationResponse(
-                        success.Id.ToString(),
-                        success.PetId.ToString(),
-                        success.ApplicantId.ToString(),
-                        success.Message,
-                        success.Status.ToString()
-                    )
-                ),
+                success => Ok(success.ToAdoptionApplicationResponse()),
                 error => Problem(error)
             );
         }

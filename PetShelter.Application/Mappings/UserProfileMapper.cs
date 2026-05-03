@@ -1,6 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using PetShelter.Application.Authentication.Commands;
 using PetShelter.Domain.Entities;
+using PetShelter.Application.Dtos.Users;
 
 namespace PetShelter.Application.Mappings;
 
@@ -12,5 +13,6 @@ public static partial class UserProfileMapper
     [MapperIgnoreTarget(nameof(UserProfile.UserId))]
     [MapperIgnoreTarget(nameof(UserProfile.User))]
     public static partial UserProfile ToUserProfile(this UserProfileInfo dto);
+    public static partial ReturnUserProfileInfo ToReturnUserProfileInfo(this UserProfile userProfile);
 #pragma warning restore RMG012
 }

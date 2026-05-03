@@ -1,17 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using PetShelter.Application.Pets.Queries;
 using PetShelter.Api.Contracts.Pets;
-using PetShelter.Application.Pets.Commands.CreatePetCommand;
 using PetShelter.Application.Pets.Commands.UpdatePetCommand;
 using PetShelter.Application.Pets.Queries.GetUserPetsQuery;
-using PetShelter.Api.Common.Models;
+using PetShelter.Application.Pets.Queries.GetPetByIdQuery;
+using PetShelter.Application.Pets.Queries.GetPetsQuery;
+using PetShelter.Api.Mappings.Pets;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/pets")]
     public class PetsController(ISender sender) : ApiController
     {
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPetById(Guid id)
+        {
+            var query = new GetPetByIdQuery(id);
+            var result = await sender.Send(query);
+            return result.Match(
+                success => Ok(success.ToPetResponse()),
+                error => Problem(error)
+            );
+        }
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserPets(
             Guid userId,
@@ -25,28 +35,7 @@ namespace PetShelter.Api.Controllers
             var query = new GetUserPetsQuery(userId, name, species, breed, age, page, pageSize);
             var result = await sender.Send(query);
             return result.Match(
-                success => Ok(
-                    new PagedListResponse<PetResponse>(
-                        success.Items.Select(p => new PetResponse(
-                            p.Id.ToString(),
-                            p.OwnerId.ToString(),
-                            p.Name,
-                            p.Species,
-                            p.Breed,
-                            p.Age,
-                            p.Description,
-                            p.Images.Select(url => new PetImageResponse(
-                                url.Id.ToString(),
-                                url.IsMain,
-                                url.Url
-                            )).ToList()
-                )).ToList(), 
-                success.PageNumber, 
-                success.TotalPages, 
-                success.TotalCount, 
-                success.HasPreviousPage, 
-                success.HasNextPage)
-                ),
+                success => Ok(success.ToPagedListResponse()),
                 error => Problem(error)
             );
         }
@@ -60,44 +49,27 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
         {
-            var query = new GetPetsPagedQuery(name, species, breed, age, page, pageSize);
+            var query = new GetPetsQuery(name, species, breed, age, page, pageSize);
             var result = await sender.Send(query);
-            // TODO: map to paged list response
-            return Ok(result);
+
+            return result.Match(
+                success => Ok(success.ToPagedListResponse()),
+                error => Problem(error)
+            );
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePet([FromForm] CreatePetRequest request)
         {
-            var command = new CreatePetCommand(
-                request.Name,
-                request.Species,
-                request.Breed,
-                request.Age,
-                request.Description,
-                request.MainPicture,
-                request.PicturesToAdd
-            );
+            var command = request.ToCreatePetCommand();
 
             var result = await sender.Send(command);
             return result.Match(
-                pet => Ok(new PetResponse(
-                    pet.Id.ToString(),
-                    pet.OwnerId.ToString(),
-                    pet.Name,
-                    pet.Species,
-                    pet.Breed,
-                    pet.Age,
-                    pet.Description,
-                    pet.Images.Select(url => new PetImageResponse(
-                        url.Id.ToString(),
-                        url.IsMain,
-                        url.Url
-                    )).ToList()
-                )),
+                pet => Ok(pet.ToPetResponse()),
                 error => Problem(error)
             );
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePet(Guid id, [FromForm] UpdatePetRequest request)
         {
@@ -115,20 +87,7 @@ namespace PetShelter.Api.Controllers
 
             var result = await sender.Send(command);
             return result.Match(
-                pet => Ok(new PetResponse(
-                    pet.Id.ToString(),
-                    pet.OwnerId.ToString(),
-                    pet.Name,
-                    pet.Species,
-                    pet.Breed,
-                    pet.Age,
-                    pet.Description,
-                    pet.Images.Select(img => new PetImageResponse(
-                        img.Id.ToString(),
-                        img.IsMain,
-                        img.Url
-                    )).ToList()
-                )),
+                success => Ok(success.ToPetResponse()),
                 error => Problem(error)
             );
         }
