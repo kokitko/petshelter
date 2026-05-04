@@ -11,3 +11,16 @@ C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\Pet
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\ref\PetShelter.Domain.dll
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.sourcelink.json
 C:\Users\koksv\Desktop\GitHub\petshelter\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.csproj.AssemblyReference.cache
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\bin\Debug\net10.0\PetShelter.Domain.deps.json
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\bin\Debug\net10.0\PetShelter.Domain.dll
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\bin\Debug\net10.0\PetShelter.Domain.pdb
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.csproj.AssemblyReference.cache
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.AssemblyInfoInputs.cache
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.AssemblyInfo.cs
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.csproj.CoreCompileInputs.cache
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.sourcelink.json
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.dll
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\refint\PetShelter.Domain.dll
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\PetShelter.Domain.pdb
+C:\Users\koksv\Desktop\GitHub\petshelter\src\PetShelter.Domain\obj\Debug\net10.0\ref\PetShelter.Domain.dll

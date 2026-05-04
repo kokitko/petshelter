@@ -2536,11 +2536,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
       "projectName": "PetShelter.Infrastructure",
-      "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\koksv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2561,11 +2561,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Application\\PetShelter.Application.csproj": {
-              "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Application\\PetShelter.Application.csproj"
+            "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Application\\PetShelter.Application.csproj": {
+              "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Application\\PetShelter.Application.csproj"
             },
-            "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\PetShelter.Domain.csproj": {
-              "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\PetShelter.Domain.csproj"
+            "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Domain\\PetShelter.Domain.csproj": {
+              "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Domain\\PetShelter.Domain.csproj"
             }
           }
         }

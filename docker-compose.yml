@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: petshelter-db
+    environment:
+      SA_PASSWORD: "SomePassword123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo '' > /dev/tcp/127.0.0.1/1433"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    container_name: petshelter-api
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=PetShelterDb;User Id=sa;Password=SomePassword123;TrustServerCertificate=true;
+      - JwtSettings__SecretKey=edd4f583-03d4-44d0-b3e9-e0e6849922a0
+# for future use
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"

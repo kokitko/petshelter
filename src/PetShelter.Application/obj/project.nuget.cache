@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j307ZRDL7sE=",
+  "dgSpecHash": "T1FpdHS29i4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Application\\PetShelter.Application.csproj",
+  "projectFilePath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Application\\PetShelter.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\koksv\\.nuget\\packages\\erroror\\2.0.1\\erroror.2.0.1.nupkg.sha512",
     "C:\\Users\\koksv\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",

@@ -48,11 +48,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\PetShelter.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Domain\\PetShelter.Domain.csproj",
       "projectName": "PetShelter.Domain",
-      "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\PetShelter.Domain.csproj",
+      "projectPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Domain\\PetShelter.Domain.csproj",
       "packagesPath": "C:\\Users\\koksv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Domain\\obj\\",
+      "outputPath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

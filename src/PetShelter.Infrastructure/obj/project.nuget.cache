@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RFD6/HN05wk=",
+  "dgSpecHash": "LFM9TXakB7o=",
   "success": true,
-  "projectFilePath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\koksv\\Desktop\\GitHub\\petshelter\\src\\PetShelter.Infrastructure\\PetShelter.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\koksv\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\koksv\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
