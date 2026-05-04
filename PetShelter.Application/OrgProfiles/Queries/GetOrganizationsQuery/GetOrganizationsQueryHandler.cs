@@ -3,6 +3,7 @@ using MediatR;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Models;
 using PetShelter.Application.Dtos.Users;
+using PetShelter.Application.Mappings;
 
 namespace PetShelter.Application.OrgProfiles.Queries.GetOrganizationsQuery;
 
@@ -18,20 +19,9 @@ public class GetOrganizationsQueryHandler(
             request.OrgName, 
             request.Address);
 
-        List<ReturnAppUserDto> orgDtos = orgProfiles.Select(o => new ReturnAppUserDto(
-            o.User.Id,
-            o.User.Email,
-            o.User.PhoneNumber,
-            o.User.ProfilePictureUrl,
-            o.User.Role.ToString(),
-            null,
-            new ReturnOrgProfileInfo(
-                o.OrgName,
-                o.Address,
-                o.Website,
-                o.IsVerified
-            )
-        )).ToList();
+        List<ReturnAppUserDto> orgDtos = orgProfiles
+            .Select(o => o.User.ToReturnAppUserDto())
+            .ToList();
 
         var pagedOrgProfiles = new PagedList<ReturnAppUserDto>(
             orgDtos,

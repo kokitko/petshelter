@@ -7,12 +7,23 @@ using PetShelter.Application.Pets.Queries.GetPetByIdQuery;
 using PetShelter.Application.Pets.Queries.GetPetsQuery;
 using PetShelter.Api.Mappings.Pets;
 using PetShelter.Application.Pets.Commands.ConfirmPetCommand;
+using PetShelter.Application.Pets.Commands.DeletePetCommand;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/pets")]
     public class PetsController(ISender sender) : ApiController
     {
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePet(Guid id)
+        {
+            var command = new DeletePetCommand(id);
+            var result = await sender.Send(command);
+            return result.Match(
+                success => Ok(success),
+                error => Problem(error)
+            );
+        }
         [HttpPut("{id}/confirm")]
         public async Task<IActionResult> ConfirmPet(Guid id)
         {

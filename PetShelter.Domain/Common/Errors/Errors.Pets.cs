@@ -6,6 +6,10 @@ public static partial class Errors
 {
     public static class Pets
     {
+        public static Error CannotDelete => Error.Conflict(
+            code: "Pets.CannotDelete",
+            description: "Only pets with 'Available' status can be deleted."
+        );
         public static Error NotConfirmed => Error.Conflict(
             code: "Pets.NotConfirmed",
             description: "This pet has not been confirmed for adoption yet."

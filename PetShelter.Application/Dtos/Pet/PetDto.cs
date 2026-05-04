@@ -1,3 +1,5 @@
+using PetShelter.Domain.Entities;
+
 namespace PetShelter.Application.Dtos.Pet;
 
 public record PetDto(
@@ -8,5 +10,6 @@ public record PetDto(
     string Breed,
     int Age,
     string Description,
+    PetStatus Status,
     List<PetImageResult> Images
 );

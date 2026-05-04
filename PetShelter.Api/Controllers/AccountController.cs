@@ -8,12 +8,29 @@ using PetShelter.Application.Accounts.Queries.GetAccountInfoQuery;
 using PetShelter.Domain.Entities;
 using PetShelter.Api.Mappings.Organizations;
 using PetShelter.Api.Mappings.Users;
+using PetShelter.Application.Accounts.Queries.GetMyAccountInfoQuery;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
     public class AccountController(ISender sender) : ApiController
     {
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMyAccountInfo()
+        {
+            var query = new GetMyAccountInfoQuery();
+            var result = await sender.Send(query);
+            return result.Match(
+                success =>
+                {
+                    if (success.Role == UserRole.Organization.ToString())
+                        return Ok(success.ToOrgProfileResponse());
+                    else
+                        return Ok(success.ToUserProfileResponse());
+                },
+                error => Problem(error)
+            );
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAccountInfo(Guid id)
         {

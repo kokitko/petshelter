@@ -4,6 +4,7 @@ using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
 using PetShelter.Application.Dtos.Users;
+using PetShelter.Application.Mappings;
 using PetShelter.Domain.Common.Errors;
 
 namespace PetShelter.Application.UserProfiles.Commands.UpdateUserProfile;
@@ -46,14 +47,6 @@ public class UserProfileUpdateCommandHandler(
 
         await userRepository.UpdateAsync(user);
 
-        return new ReturnAppUserDto(
-            user.Id,
-            user.Email,
-            user.PhoneNumber,
-            user.ProfilePictureUrl,
-            user.Role.ToString(),
-            new ReturnUserProfileInfo(user.UserProfile.FirstName, user.UserProfile.LastName),
-            null
-        );
+        return user.ToReturnAppUserDto();
     }
 }

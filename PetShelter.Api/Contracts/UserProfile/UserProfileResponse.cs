@@ -7,5 +7,7 @@ public record UserProfileResponse(
     string Email,
     string? PhoneNumber,
     string? ProfilePictureUrl,
-    string Role
+    string Role,
+    int PetsCount,
+    int? ApplicationsCount
 );

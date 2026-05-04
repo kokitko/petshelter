@@ -51,14 +51,13 @@ public class UpdatePetCommandHandler(
                 $"{pet.Id}_{request.MainPicture.FileName}", 
                 request.MainPicture.ContentType);
 
-            PetImage image = new PetImage{
+            await petImageRepository.AddAsync(new PetImage
+            {
                 Id = Guid.NewGuid(),
                 PetId = pet.Id,
                 Url = mainImageUrl,
                 IsMain = true
-            };
-
-            await petImageRepository.AddAsync(image);
+            });
         }
 
         if (request.PicturesToAdd != null)
@@ -75,13 +74,13 @@ public class UpdatePetCommandHandler(
 
                 if (!string.IsNullOrEmpty(imageUrl))
                 {
-                    PetImage image = new PetImage
+                    await petImageRepository.AddAsync(new PetImage
                     {
                         Id = Guid.NewGuid(),
                         PetId = pet.Id,
-                        Url = imageUrl
-                    };
-                    await petImageRepository.AddAsync(image);
+                        Url = imageUrl,
+                        IsMain = false
+                    });
                 }
             }
         }

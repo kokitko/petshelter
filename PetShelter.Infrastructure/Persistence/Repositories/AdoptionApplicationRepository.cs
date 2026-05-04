@@ -89,4 +89,11 @@ public class AdoptionApplicationRepository(
 
         return (applications, totalCount);
     }
+
+    public async Task DeleteByPetIdAsync(Guid petId)
+    {
+        var applications = await GetByPetIdAsync(petId);
+        foreach (var application in applications)
+            await DeleteAsync(application);
+    }
 }

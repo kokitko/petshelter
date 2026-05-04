@@ -4,6 +4,7 @@ using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
 using PetShelter.Application.Dtos.Users;
+using PetShelter.Application.Mappings;
 using PetShelter.Domain.Common.Errors;
 
 namespace PetShelter.Application.OrgProfiles.Commands.UpdateOrgProfile;
@@ -47,19 +48,6 @@ public class OrgProfileUpdateCommandHandler(
 
         await userRepository.UpdateAsync(user);
 
-        return new ReturnAppUserDto(
-            user.Id,
-            user.Email,
-            user.PhoneNumber,
-            user.ProfilePictureUrl,
-            user.Role.ToString(),
-            null,
-            new ReturnOrgProfileInfo(
-                user.OrgProfile.OrgName,
-                user.OrgProfile.Address,
-                user.OrgProfile.Website,
-                user.OrgProfile.IsVerified
-            )
-        );
+        return user.ToReturnAppUserDto();
     }
 }

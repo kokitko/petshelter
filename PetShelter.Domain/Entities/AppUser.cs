@@ -14,6 +14,8 @@ public class AppUser : BaseEntity
     public ICollection<Pet> Pets { get; set; } = new List<Pet>();
     public ICollection<AdoptionApplication> Applications { get; set; } = new List<AdoptionApplication>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public int PetsCount => Pets.Count;
+    public int ApplicationsCount => Applications.Count;
 }
 
 public enum UserRole

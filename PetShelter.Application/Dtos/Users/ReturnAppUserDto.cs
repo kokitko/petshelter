@@ -6,6 +6,7 @@ public record ReturnAppUserDto(
     string? PhoneNumber,
     string? ProfilePictureUrl,
     string Role,
+    int PetsCount,
     ReturnUserProfileInfo? UserProfile,
     ReturnOrgProfileInfo? OrgProfile
 );
