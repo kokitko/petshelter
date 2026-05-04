@@ -14,7 +14,8 @@ public class UpdatePetCommandHandler(
     IPetRepository petRepository,
     ICurrentUserProvider currentUserProvider,
     IFileStorageService fileStorageService,
-    IPetImageRepository petImageRepository
+    IPetImageRepository petImageRepository,
+    ICacheService cacheService
 ) : IRequestHandler<UpdatePetCommand, ErrorOr<PetDto>>
 {
     public async Task<ErrorOr<PetDto>> Handle(UpdatePetCommand request, CancellationToken cancellationToken)
@@ -99,6 +100,7 @@ public class UpdatePetCommandHandler(
         }
 
         await petRepository.SaveChangesAsync();
+        await cacheService.RemoveByPrefixAsync("GetPetsQuery", cancellationToken);
 
         return pet.ToPetDto();
     }

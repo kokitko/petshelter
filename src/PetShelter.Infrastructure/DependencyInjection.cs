@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using StackExchange.Redis;
 
 namespace PetShelter.Infrastructure;
 
@@ -23,9 +24,30 @@ public static class DependencyInjection
     {
         services
             .AddPersistence(configuration)
-            .AddAuth(configuration);
+            .AddAuth(configuration)
+            .AddRedisCache(configuration);
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRedisCache(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var redisConnection = configuration.GetConnectionString("RedisConnection");
+        
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisConnection;
+            options.InstanceName = "PetShelter_";
+        });
+        
+        services.AddSingleton<IConnectionMultiplexer>(sp => 
+            ConnectionMultiplexer.Connect(redisConnection ?? "localhost:6379"));
+        
+        services.AddSingleton<ICacheService, CacheService>();
 
         return services;
     }

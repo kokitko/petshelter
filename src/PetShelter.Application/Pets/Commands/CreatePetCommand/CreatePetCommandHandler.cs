@@ -13,7 +13,8 @@ namespace PetShelter.Application.Pets.Commands.CreatePetCommand;
 public class CreatePetCommandHandler(
     IPetRepository petRepository,
     IFileStorageService fileStorageService,
-    ICurrentUserProvider currentUserProvider
+    ICurrentUserProvider currentUserProvider,
+    ICacheService cacheService
 ) : IRequestHandler<CreatePetCommand, ErrorOr<PetDto>>
 {
     public async Task<ErrorOr<PetDto>> Handle(CreatePetCommand request, CancellationToken cancellationToken)
@@ -62,6 +63,8 @@ public class CreatePetCommandHandler(
             }
 
         await petRepository.AddAsync(pet);
+        await cacheService.RemoveByPrefixAsync("GetPetsQuery", cancellationToken);
+        
         return pet.ToPetDto();
     }
 }

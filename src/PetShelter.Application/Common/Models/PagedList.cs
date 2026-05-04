@@ -2,7 +2,8 @@ namespace PetShelter.Application.Common.Models;
 
 public class PagedList<T>
 {
-    public List<T> Items { get; set; }
+    public PagedList() {}
+    public List<T> Items { get; init; } = new();
     public int PageNumber { get; set; }
     public int TotalPages { get; set; }
     public int TotalCount { get; set; }

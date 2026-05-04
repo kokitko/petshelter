@@ -12,7 +12,8 @@ namespace PetShelter.Application.OrgProfiles.Commands.UpdateOrgProfile;
 public class OrgProfileUpdateCommandHandler(
     IAppUserRepository userRepository,
     ICurrentUserProvider currentUserProvider,
-    IFileStorageService fileStorageService
+    IFileStorageService fileStorageService,
+    ICacheService cacheService
 ) : IRequestHandler<OrgProfileUpdateCommand, ErrorOr<ReturnAppUserDto>>
 {
     public async Task<ErrorOr<ReturnAppUserDto>> Handle(OrgProfileUpdateCommand request, CancellationToken cancellationToken)
@@ -47,6 +48,7 @@ public class OrgProfileUpdateCommandHandler(
         user.OrgProfile!.Website = request.Website;
 
         await userRepository.UpdateAsync(user);
+        await cacheService.RemoveByPrefixAsync("GetOrganizationsQuery", cancellationToken);
 
         return user.ToReturnAppUserDto();
     }

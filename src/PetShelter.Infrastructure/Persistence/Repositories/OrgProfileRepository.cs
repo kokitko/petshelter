@@ -48,6 +48,7 @@ public class OrgProfileRepository(PetShelterDbContext context) : IOrgProfileRepo
 
         var totalCount = await query.CountAsync();
         var profiles = await query
+            .OrderByDescending(p => p.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

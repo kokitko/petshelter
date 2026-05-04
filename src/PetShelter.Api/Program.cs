@@ -18,7 +18,6 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<PetShelter.Infrastructure.Persistence.PetShelterDbContext>();
     dbContext.Database.Migrate();
 }
-
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

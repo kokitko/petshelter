@@ -45,6 +45,7 @@ public class PetRepository(PetShelterDbContext context) : IPetRepository
 
         var totalCount = await query.CountAsync();
         var items = await query
+            .OrderByDescending(p => p.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

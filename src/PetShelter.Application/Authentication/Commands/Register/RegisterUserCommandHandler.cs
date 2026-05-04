@@ -6,6 +6,7 @@ using PetShelter.Domain.Common.Errors;
 using PetShelter.Domain.Entities;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Mappings;
+using PetShelter.Application.Common.Interfaces.Services;
 
 namespace PetShelter.Application.Authentication.Commands;
 
@@ -13,7 +14,8 @@ public class RegisterUserCommandHandler(
     IAppUserRepository userRepository,
     IPasswordHasher passwordHasher,
     IJwtTokenGenerator jwtTokenGenerator,
-    IRefreshTokenGenerator refreshTokenGenerator
+    IRefreshTokenGenerator refreshTokenGenerator,
+    ICacheService cacheService
 ) : IRequestHandler<RegisterUserCommand, ErrorOr<AuthenticationResult>>
 {
     public async Task<ErrorOr<AuthenticationResult>> Handle(
@@ -64,7 +66,8 @@ public class RegisterUserCommandHandler(
         user.RefreshTokens.Add(refreshTokenEntity);
 
         await userRepository.AddAsync(user);
-
+        await cacheService.RemoveByPrefixAsync("GetOrganizationsQuery", cancellationToken);
+        
         var userDto = user.ToReturnAuthUserDto();
 
         return new AuthenticationResult(accessToken, refreshTokenEntity.Token, userDto);

@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using PetShelter.Application.Common.Interfaces.Queries;
 using PetShelter.Application.Common.Models;
 using PetShelter.Application.Dtos.Users;
 
@@ -10,4 +11,8 @@ public record GetOrganizationsQuery(
     string? Address,
     int PageNumber = 1,
     int PageSize = 10
-) : IRequest<ErrorOr<PagedList<ReturnAppUserDto>>>;
+) : IRequest<ErrorOr<PagedList<ReturnAppUserDto>>>, ICachedQuery
+{
+    public string CacheKey => $"GetOrganizationsQuery-{OrgName}-{Address}-{PageNumber}-{PageSize}";
+    public TimeSpan? Expiration => TimeSpan.FromMinutes(5);
+}

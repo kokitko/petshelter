@@ -31,6 +31,7 @@
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Interfaces\Authentication\" />
     <Folder Include="Common\Interfaces\Persistence\" />
+    <Folder Include="Common\Interfaces\Queries\" />
     <Folder Include="Common\Interfaces\Services\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Dtos\Pet\" />

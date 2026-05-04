@@ -63,6 +63,7 @@ public class AdoptionApplicationRepository(
             query = query.Where(a => a.Status == status);
 
         var applications = await query
+            .OrderByDescending(a => a.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -81,6 +82,7 @@ public class AdoptionApplicationRepository(
             query = query.Where(a => a.Status == status);
 
         var applications = await query
+            .OrderByDescending(a => a.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

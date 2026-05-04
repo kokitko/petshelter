@@ -17,7 +17,8 @@ public class DeleteAccountCommandHandler(
     IFileStorageService fileService,
     IAdoptionApplicationRepository adoptionRepository,
     IRefreshTokenRepository refreshTokenRepository,
-    IPasswordHasher passwordHasher
+    IPasswordHasher passwordHasher,
+    ICacheService cacheService
 ) : IRequestHandler<DeleteAccountCommand, ErrorOr<bool>>
 {
     public async Task<ErrorOr<bool>> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
@@ -62,6 +63,8 @@ public class DeleteAccountCommandHandler(
             await refreshTokenRepository.DeleteAsync(token);
 
         await userRepository.DeleteAsync(user);
+        await cacheService.RemoveByPrefixAsync("GetOrganizationsQuery", cancellationToken);
+        
         return true;
     }
 }

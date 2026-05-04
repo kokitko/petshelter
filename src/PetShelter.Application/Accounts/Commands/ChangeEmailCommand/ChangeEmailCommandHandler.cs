@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
+using PetShelter.Application.Common.Interfaces.Services;
 using PetShelter.Domain.Common.Errors;
 
 namespace PetShelter.Application.Accounts.Commands.ChangeEmailCommand;
@@ -10,7 +11,8 @@ public class ChangeEmailCommandHandler(
     IAppUserRepository userRepository,
     ICurrentUserProvider currentUserProvider,
     IPasswordHasher passwordHasher,
-    IRefreshTokenRepository refreshTokenRepository
+    IRefreshTokenRepository refreshTokenRepository,
+    ICacheService cacheService
 ) : IRequestHandler<ChangeEmailCommand, ErrorOr<bool>>
 {
     public async Task<ErrorOr<bool>> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,8 @@ public class ChangeEmailCommandHandler(
         user.Email = request.NewEmail;
         await userRepository.UpdateAsync(user);
         await refreshTokenRepository.DeleteByUserIdAsync(user.Id);
+        await cacheService.RemoveByPrefixAsync("GetOrganizationsQuery", cancellationToken);
+        
         return true;
     }
 }
