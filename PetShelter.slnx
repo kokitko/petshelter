@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="PetShelter.Api/PetShelter.Api.csproj" />
-  <Project Path="PetShelter.Application/PetShelter.Application.csproj" />
-  <Project Path="PetShelter.Domain/PetShelter.Domain.csproj" />
-  <Project Path="PetShelter.Infrastructure/PetShelter.Infrastructure.csproj" />
+  <Project Path="src/PetShelter.Api/PetShelter.Api.csproj" />
+  <Project Path="src/PetShelter.Application/PetShelter.Application.csproj" />
+  <Project Path="src/PetShelter.Domain/PetShelter.Domain.csproj" />
+  <Project Path="src/PetShelter.Infrastructure/PetShelter.Infrastructure.csproj" />
 </Solution>
