@@ -19,14 +19,14 @@ namespace PetShelter.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
+    public static async Task<IServiceCollection> AddInfrastructureAsync(
         this IServiceCollection services, 
         IConfiguration configuration)
     {
-        services
-            .AddPersistence(configuration)
+        await services
             .AddAuth(configuration)
-            .AddRedisCache(configuration);
+            .AddRedisCache(configuration)
+            .AddPersistenceAsync(configuration);
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -53,10 +53,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddPersistence(
+    public static async Task<IServiceCollection> AddPersistenceAsync(
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+
         services
             .AddDbContext<PetShelterDbContext>(options => 
                 options.UseSqlServer(
@@ -66,6 +68,13 @@ public static class DependencyInjection
                         maxRetryDelay: TimeSpan.FromSeconds(10),
                         errorNumbersToAdd: null)));
 
+        using (var scope = services.BuildServiceProvider().CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<PetShelterDbContext>();
+            dbContext.Database.Migrate();
+            await DbInitializer.InitializeAsync(scope.ServiceProvider);
+        }
+
         services.AddScoped<IPetRepository, PetRepository>();
         services.AddScoped<IAppUserRepository, AppUserRepository>();
         services.AddScoped<IOrgProfileRepository, OrgProfileRepository>();
@@ -74,7 +83,6 @@ public static class DependencyInjection
         services.AddScoped<IPetImageRepository, PetImageRepository>();
         services.AddScoped<IAdoptionApplicationRepository, AdoptionApplicationRepository>();
         services.AddScoped<IFileStorageService, FileStorageService>();
-        services.AddScoped<IPasswordHasher, PasswordHasher>();
         
         return services;
     }

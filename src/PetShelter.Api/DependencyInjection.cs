@@ -13,6 +13,17 @@ public static class DependencyInjection
         services.AddSingleton<ProblemDetailsFactory, PetShelterProblemDetailsFactory>();
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                });
+        });
         return services;
     }
 }

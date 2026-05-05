@@ -3,7 +3,6 @@ using MediatR;
 using PetShelter.Application.Common.Behaviours;
 using FluentValidation;
 using System.Reflection;
-using PetShelter.Application.Common.Logging;
 
 namespace PetShelter.Application;
 

@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Domain.Common.Models;
 using PetShelter.Domain.Entities;
 
 namespace PetShelter.Infrastructure.Persistence;
 
-public class PetShelterDbContext(DbContextOptions<PetShelterDbContext> options) : DbContext(options)
+public class PetShelterDbContext(
+    DbContextOptions<PetShelterDbContext> options) : DbContext(options)
 {
     public DbSet<Pet> Pets => Set<Pet>();
     public DbSet<PetImage> PetImages => Set<PetImage>();
@@ -14,51 +17,60 @@ public class PetShelterDbContext(DbContextOptions<PetShelterDbContext> options) 
     public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnConfiguring(optionsBuilder);
+        
+        // Suppress the pending model changes warning since seed data uses dynamic password hashing
+        optionsBuilder.ConfigureWarnings(w => 
+            w.Ignore(RelationalEventId.PendingModelChangesWarning));
+    }
 
-        modelBuilder.Entity<Pet>()
+    protected override void OnModelCreating(ModelBuilder mb)
+    {
+        base.OnModelCreating(mb);
+
+        mb.Entity<Pet>()
             .HasOne(p => p.Owner)
             .WithMany(u => u.Pets)
             .HasForeignKey(p => p.OwnerId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<PetImage>()
+        mb.Entity<PetImage>()
             .HasOne(pi => pi.Pet)
             .WithMany(p => p.Images)
             .HasForeignKey(pi => pi.PetId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<AdoptionApplication>()
+        mb.Entity<AdoptionApplication>()
             .HasOne(aa => aa.Pet)
             .WithMany(p => p.Applications)
             .HasForeignKey(aa => aa.PetId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<AdoptionApplication>()
+        mb.Entity<AdoptionApplication>()
             .HasOne(aa => aa.Applicant)
             .WithMany(u => u.Applications)
             .HasForeignKey(aa => aa.ApplicantId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<OrgProfile>()
+        mb.Entity<OrgProfile>()
             .HasOne(op => op.User)
             .WithOne(u => u.OrgProfile)
             .HasForeignKey<OrgProfile>(op => op.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<UserProfile>()
+        mb.Entity<UserProfile>()
             .HasOne(up => up.User)
             .WithOne(u => u.UserProfile)
             .HasForeignKey<UserProfile>(up => up.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<AppUser>()
+        mb.Entity<AppUser>()
             .HasIndex(u => u.Email)
             .IsUnique();
 
-        modelBuilder.Entity<RefreshToken>()
+        mb.Entity<RefreshToken>()
             .HasOne(rt => rt.User)
             .WithMany(u => u.RefreshTokens)
             .HasForeignKey(rt => rt.UserId)
