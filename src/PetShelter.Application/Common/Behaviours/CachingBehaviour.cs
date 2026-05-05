@@ -19,16 +19,12 @@ public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TRe
         var cachedData = await cacheService.GetAsync(request.CacheKey, valueType, ct);
 
         if (cachedData != null)
-        {
             return (dynamic)cachedData; 
-        }
 
         var result = await next();
 
         if (!result.IsError)
-        {
             await cacheService.SetAsync(request.CacheKey, ((dynamic)result).Value, request.Expiration, ct);
-        }
 
         return result;
     }

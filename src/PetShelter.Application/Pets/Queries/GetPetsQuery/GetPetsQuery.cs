@@ -7,6 +7,7 @@ using PetShelter.Application.Dtos.Pet;
 namespace PetShelter.Application.Pets.Queries.GetPetsQuery;
 
 public record GetPetsQuery(
+    string? Status,
     string? Name,
     string? Species,
     string? Breed,
@@ -15,6 +16,6 @@ public record GetPetsQuery(
     int PageSize = 10
 ) : IRequest<ErrorOr<PagedList<PetDto>>>, ICachedQuery
 {
-    public string CacheKey => $"GetPetsQuery-{Name}-{Species}-{Breed}-{Age}-{PageNumber}-{PageSize}";
+    public string CacheKey => $"GetPetsQuery-{Status}-{Name}-{Species}-{Breed}-{Age}-{PageNumber}-{PageSize}";
     public TimeSpan? Expiration => TimeSpan.FromMinutes(5);
 }

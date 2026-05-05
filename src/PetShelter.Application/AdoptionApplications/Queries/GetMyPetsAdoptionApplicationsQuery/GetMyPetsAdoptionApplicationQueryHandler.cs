@@ -23,7 +23,7 @@ public class GetMyPetsAdoptionApplicationQueryHandler(
 
         var (applications, totalCount) = await adoptionApplicationRepository.GetByOwnerIdAsync(
             userId.Value,
-            Enum.TryParse<ApplicationStatus>(request.Status, out var status) ? status : null,
+            Enum.TryParse<ApplicationStatus>(request.Status, true, out var status) ? status : null,
             request.PageNumber,
             request.PageSize
         );

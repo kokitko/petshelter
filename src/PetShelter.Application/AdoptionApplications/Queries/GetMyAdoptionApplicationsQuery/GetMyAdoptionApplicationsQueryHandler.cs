@@ -23,7 +23,7 @@ public class GetMyAdoptionApplicationsQueryHandler(
 
         var (applications, totalCount) = await adoptionApplicationRepository.GetByApplicantIdAsync(
             currentUserId.Value, 
-            Enum.TryParse<ApplicationStatus>(request.Status, out var status) ? status : null,
+            Enum.TryParse<ApplicationStatus>(request.Status, true, out var status) ? status : null,
             request.PageNumber, 
             request.PageSize);
 

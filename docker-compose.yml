@@ -39,3 +39,9 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=PetShelterDb;User Id=sa;Password=SomePassword123;TrustServerCertificate=true;
       - ConnectionStrings__RedisConnection=petshelter-redis:6379
       - JwtSettings__SecretKey=edd4f583-03d4-44d0-b3e9-e0e6849922a0
+      - FileStorage__Path=/app/FileStorage
+    volumes:
+      - petshelter-storage:/app/FileStorage
+
+volumes:
+  petshelter-storage:

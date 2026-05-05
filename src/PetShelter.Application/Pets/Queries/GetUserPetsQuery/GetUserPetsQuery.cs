@@ -7,6 +7,7 @@ namespace PetShelter.Application.Pets.Queries.GetUserPetsQuery;
 
 public record GetUserPetsQuery(
     Guid UserId,
+    string? Status,
     string? Name = null,
     string? Species = null,
     string? Breed = null,

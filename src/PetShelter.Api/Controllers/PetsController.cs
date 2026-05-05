@@ -47,6 +47,7 @@ namespace PetShelter.Api.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserPets(
             Guid userId,
+            [FromQuery] string? status,
             [FromQuery] int? age,
             [FromQuery] string? name, 
             [FromQuery] string? species, 
@@ -54,7 +55,7 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
         {
-            var query = new GetUserPetsQuery(userId, name, species, breed, age, page, pageSize);
+            var query = new GetUserPetsQuery(userId, status, name, species, breed, age, page, pageSize);
             var result = await sender.Send(query);
             return result.Match(
                 success => Ok(success.ToPagedListResponse()),
@@ -64,6 +65,7 @@ namespace PetShelter.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetPetsPaged(
+            [FromQuery] string? status,
             [FromQuery] int? age,
             [FromQuery] string? name, 
             [FromQuery] string? species, 
@@ -71,7 +73,7 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10)
         {
-            var query = new GetPetsQuery(name, species, breed, age, page, pageSize);
+            var query = new GetPetsQuery(status, name, species, breed, age, page, pageSize);
             var result = await sender.Send(query);
 
             return result.Match(

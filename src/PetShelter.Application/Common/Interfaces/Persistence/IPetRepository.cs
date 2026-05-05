@@ -6,7 +6,8 @@ public interface IPetRepository
 {
     Task<(IEnumerable<Pet> Items, int TotalCount)> GetPagedAsync(
         int pageNumber, 
-        int pageSize, 
+        int pageSize,
+        PetStatus? status,
         string? species, 
         string? breed,
         string? name,

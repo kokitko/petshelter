@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
+using PetShelter.Application.Common.Interfaces.Services;
 using PetShelter.Domain.Common.Errors;
 using PetShelter.Domain.Entities;
 
@@ -10,7 +11,8 @@ namespace PetShelter.Application.AdoptionApplications.Commands.RejectAdoptionApp
 public class RejectAdoptionApplicationCommandHandler(
     IAdoptionApplicationRepository adoptionApplicationRepository,
     ICurrentUserProvider currentUserProvider,
-    IPetRepository petRepository
+    IPetRepository petRepository, 
+    ICacheService cacheService
 ) : IRequestHandler<RejectAdoptionApplicationCommand, ErrorOr<bool>>
 {
     public async Task<ErrorOr<bool>> Handle(RejectAdoptionApplicationCommand request, CancellationToken cancellationToken)
@@ -34,6 +36,7 @@ public class RejectAdoptionApplicationCommandHandler(
         {
             application.Pet.Status = PetStatus.Available;
             await petRepository.SaveChangesAsync();
+            await cacheService.RemoveByPrefixAsync("GetPetsQuery", cancellationToken);
         }
 
         application.Status = ApplicationStatus.Rejected;

@@ -15,4 +15,5 @@ RUN dotnet publish "src/PetShelter.Api/PetShelter.Api.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN mkdir -p /app/FileStorage
 ENTRYPOINT ["dotnet", "PetShelter.Api.dll"]

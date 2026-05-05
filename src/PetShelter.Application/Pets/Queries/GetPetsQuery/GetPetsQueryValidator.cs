@@ -1,4 +1,5 @@
 using FluentValidation;
+using PetShelter.Domain.Entities;
 
 namespace PetShelter.Application.Pets.Queries.GetPetsQuery;
 
@@ -6,6 +7,10 @@ public class GetPetsQueryValidator : AbstractValidator<GetPetsQuery>
 {
     public GetPetsQueryValidator()
     {
+        RuleFor(x => x.Status)
+            .Must(status => status == null || Enum.TryParse<PetStatus>(status, true, out _))
+            .WithMessage("Invalid status value.");
+
         RuleFor(x => x.PageNumber)
             .GreaterThan(0)
             .WithMessage("Page number must be greater than 0.");

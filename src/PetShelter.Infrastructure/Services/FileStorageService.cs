@@ -1,17 +1,28 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using PetShelter.Application.Common.Interfaces.Services;
 
 namespace PetShelter.Infrastructure.Services;
 
 public class FileStorageService : IFileStorageService
 {
-    private readonly string _storagePath = Path.Combine(
-        Directory.GetDirectoryRoot(
-        Environment.GetFolderPath(
-        Environment.SpecialFolder.ApplicationData)), "FileStorage");
+    private readonly string _storagePath;
 
-    public FileStorageService()
+    public FileStorageService(IConfiguration configuration)
     {
+        var configPath = configuration.GetValue<string>("FileStorage:Path");
+        
+        if (!string.IsNullOrEmpty(configPath))
+        {
+            _storagePath = configPath;
+        }
+        else
+        {
+            // fallback for a docker env
+            var appDir = AppContext.BaseDirectory;
+            _storagePath = Path.Combine(appDir, "FileStorage");
+        }
+
         if (!Directory.Exists(_storagePath))
             Directory.CreateDirectory(_storagePath);
     }

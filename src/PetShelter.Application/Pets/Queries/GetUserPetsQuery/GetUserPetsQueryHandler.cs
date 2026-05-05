@@ -4,7 +4,7 @@ using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Models;
 using PetShelter.Application.Dtos.Pet;
 using PetShelter.Application.Mappings;
-using PetShelter.Domain.Common.Errors;
+using PetShelter.Domain.Entities;
 
 namespace PetShelter.Application.Pets.Queries.GetUserPetsQuery;
 
@@ -17,6 +17,7 @@ public class GetUserPetsQueryHandler(
         var (pets, totalCount) = await petRepository.GetPagedAsync(
             request.Page,
             request.PageSize,
+            Enum.TryParse<PetStatus>(request.Status, true, out var status) ? status : null,
             request.Species,
             request.Breed,
             request.Name,
