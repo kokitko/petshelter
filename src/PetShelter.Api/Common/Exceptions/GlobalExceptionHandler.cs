@@ -12,8 +12,14 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             Status = StatusCodes.Status500InternalServerError,
             Title = "Server Error",
-            Detail = exception.Message
+            Detail = exception.Message,
+            Extensions =
+            {
+                ["traceId"] = httpContext.TraceIdentifier
+            }
         };
+
+        problemDetails.Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1";
 
         httpContext.Response.StatusCode = problemDetails.Status.Value;
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);

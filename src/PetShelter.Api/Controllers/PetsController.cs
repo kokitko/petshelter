@@ -8,12 +8,14 @@ using PetShelter.Application.Pets.Queries.GetPetsQuery;
 using PetShelter.Api.Mappings.Pets;
 using PetShelter.Application.Pets.Commands.ConfirmPetCommand;
 using PetShelter.Application.Pets.Commands.DeletePetCommand;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/pets")]
     public class PetsController(ISender sender) : ApiController
     {
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePet(Guid id)
         {
@@ -24,6 +26,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<IActionResult> ConfirmPet(Guid id)
         {
@@ -62,7 +65,6 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
-
         [HttpGet]
         public async Task<IActionResult> GetPetsPaged(
             [FromQuery] string? status,
@@ -81,7 +83,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreatePet([FromForm] CreatePetRequest request)
         {
@@ -94,6 +96,7 @@ namespace PetShelter.Api.Controllers
             );
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePet(Guid id, [FromForm] UpdatePetRequest request)
         {

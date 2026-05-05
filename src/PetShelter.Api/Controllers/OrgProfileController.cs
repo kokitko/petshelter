@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetShelter.Api.Contracts.OrgProfile;
 using PetShelter.Api.Mappings.Organizations;
@@ -30,6 +31,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateOrgProfile([FromForm] OrgProfileUpdateRequest request)
         {

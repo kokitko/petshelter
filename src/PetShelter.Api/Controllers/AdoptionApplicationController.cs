@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetShelter.Api.Contracts.AdoptionApplication;
 using PetShelter.Api.Mappings.AdoptionApplications;
@@ -14,6 +15,7 @@ namespace PetShelter.Api.Controllers
     [Route("api/[controller]")]
     public class AdoptionApplicationController(ISender sender) : ApiController
     {
+        [Authorize]
         [HttpGet("my-applications")]
         public async Task<IActionResult> GetMyAdoptionApplications(
             [FromQuery] string? status,
@@ -32,6 +34,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpGet("my-pets-applications")]
         public async Task<IActionResult> GetMyPetsAdoptionApplications(
             [FromQuery] string? status,
@@ -50,6 +53,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdoptionApplicationById(Guid id)
         {
@@ -60,6 +64,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPut("{id}/reject")]
         public async Task<IActionResult> RejectAdoptionApplication(Guid id)
         {
@@ -70,7 +75,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
-
+        [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<IActionResult> ConfirmAdoptionApplication(Guid id)
         {
@@ -81,6 +86,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAdoptionApplication(CreateAdoptionApplicationRequest request)
         {

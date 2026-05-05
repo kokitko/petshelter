@@ -9,12 +9,14 @@ using PetShelter.Domain.Entities;
 using PetShelter.Api.Mappings.Organizations;
 using PetShelter.Api.Mappings.Users;
 using PetShelter.Application.Accounts.Queries.GetMyAccountInfoQuery;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
     public class AccountController(ISender sender) : ApiController
     {
+        [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetMyAccountInfo()
         {
@@ -47,6 +49,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
         {
@@ -65,6 +68,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpPut("change-email")]
         public async Task<IActionResult> ChangeEmail(ChangeEmailRequest request)
         {
@@ -83,6 +87,7 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
+        [Authorize]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteAccount(DeleteAccountRequest request)
         {

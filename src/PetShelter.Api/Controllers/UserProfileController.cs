@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetShelter.Api.Contracts.UserProfile;
 using PetShelter.Api.Mappings.Users;
@@ -9,6 +10,7 @@ namespace PetShelter.Api.Controllers
     [Route("api/[controller]")]
     public class UserProfileController(ISender sender) : ApiController
     {
+        [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUserProfile([FromForm] UserProfileUpdateRequest request)
         {
