@@ -3,6 +3,7 @@ using MediatR;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
+using PetShelter.Application.Pets.Common;
 using PetShelter.Domain.Common.Errors;
 using PetShelter.Domain.Entities;
 
@@ -13,9 +14,9 @@ public class DeletePetCommandHandler(
     IAdoptionApplicationRepository adoptionRepository,
     ICurrentUserProvider currentUserProvider,
     ICacheService cacheService
-) : IRequestHandler<DeletePetCommand, ErrorOr<bool>>
+) : IRequestHandler<DeletePetCommand, ErrorOr<DeletePetDto>>
 {
-    public async Task<ErrorOr<bool>> Handle(DeletePetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<DeletePetDto>> Handle(DeletePetCommand request, CancellationToken cancellationToken)
     {
         var userId = currentUserProvider.GetCurrentUserId();
         if (userId == null)
@@ -31,10 +32,12 @@ public class DeletePetCommandHandler(
         if (pet.Status != PetStatus.Available)
             return Errors.Pets.CannotDelete;
 
+        var petId = pet.Id.ToString();
+
         await adoptionRepository.DeleteByPetIdAsync(pet.Id);
         await petRepository.DeleteAsync(pet);
         await cacheService.RemoveByPrefixAsync("GetPetsQuery", cancellationToken);
 
-        return true;
+        return new DeletePetDto(petId);
     }
 }

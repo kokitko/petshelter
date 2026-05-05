@@ -8,12 +8,15 @@ using PetShelter.Application.UserProfiles.Commands.UpdateUserProfile;
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class UserProfileController(ISender sender) : ApiController
+    public class UserProfileController(
+        ISender sender,
+        ILogger<UserProfileController> logger) : ApiController(logger)
     {
         [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUserProfile([FromForm] UserProfileUpdateRequest request)
         {
+            logger.LogInformation("PUT /api/userprofile/update called with phoneNumber: {PhoneNumber}, firstName: {FirstName}, lastName: {LastName}", request.PhoneNumber, request.FirstName, request.LastName);
             var command = new UserProfileUpdateCommand(
                 request.PhoneNumber,
                 request.ProfilePicture,
@@ -23,7 +26,10 @@ namespace PetShelter.Api.Controllers
 
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(success.ToUserProfileResponse()),
+                success => {
+                    logger.LogInformation("PUT /api/userprofile/update successful for userId: {UserId}", success.Id);
+                    return Ok(success.ToUserProfileResponse());
+                },
                 error => Problem(error)
             );
         }

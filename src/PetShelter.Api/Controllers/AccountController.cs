@@ -14,17 +14,21 @@ using Microsoft.AspNetCore.Authorization;
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController(ISender sender) : ApiController
+    public class AccountController(
+        ISender sender,
+        ILogger<AccountController> logger) : ApiController(logger)
     {
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetMyAccountInfo()
         {
+            logger.LogInformation("GET /api/account/me called");
             var query = new GetMyAccountInfoQuery();
             var result = await sender.Send(query);
             return result.Match(
                 success =>
                 {
+                    logger.LogInformation("GET /api/account/me successful for userId: {UserId}", success.Id);
                     if (success.Role == UserRole.Organization.ToString())
                         return Ok(success.ToOrgProfileResponse());
                     else
@@ -36,11 +40,13 @@ namespace PetShelter.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAccountInfo(Guid id)
         {
+            logger.LogInformation("GET /api/account/[id] called with id: {Id}", id);
             var query = new GetAccountInfoQuery(id);
             var result = await sender.Send(query);
             return result.Match(
                 success =>
                 {
+                    logger.LogInformation("GET /api/account/[id] successful for id: {Id}", id);
                     if (success.Role == UserRole.Organization.ToString())
                         return Ok(success.ToOrgProfileResponse());
                     else
@@ -53,6 +59,7 @@ namespace PetShelter.Api.Controllers
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
         {
+            logger.LogInformation("PUT /api/account/change-password called");
             var command = new ChangePasswordCommand(
                 request.CurrentPassword,
                 request.NewPassword
@@ -62,6 +69,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success =>
                 {
+                    logger.LogInformation("Password change successful for userId: {UserId}", success.UserId);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },
@@ -72,6 +80,7 @@ namespace PetShelter.Api.Controllers
         [HttpPut("change-email")]
         public async Task<IActionResult> ChangeEmail(ChangeEmailRequest request)
         {
+            logger.LogInformation("PUT /api/account/change-email called");
             var command = new ChangeEmailCommand(
                 request.NewEmail,
                 request.CurrentPassword
@@ -81,6 +90,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success =>
                 {
+                    logger.LogInformation("Email change successful for userId: {UserId}", success.UserId);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },
@@ -91,12 +101,14 @@ namespace PetShelter.Api.Controllers
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteAccount(DeleteAccountRequest request)
         {
+            logger.LogInformation("DELETE /api/account/delete called");
             var command = new DeleteAccountCommand(request.Password);
 
             var result = await sender.Send(command);
             return result.Match(
                 success =>
                 {
+                    logger.LogInformation("Account deletion successful for userId: {UserId}", success.UserId);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },

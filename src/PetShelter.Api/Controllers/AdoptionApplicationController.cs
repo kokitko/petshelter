@@ -13,7 +13,9 @@ using PetShelter.Application.AdoptionApplications.Queries.GetMyPetsAdoptionAppli
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class AdoptionApplicationController(ISender sender) : ApiController
+    public class AdoptionApplicationController(
+        ISender sender,
+        ILogger<AdoptionApplicationController> logger) : ApiController(logger)
     {
         [Authorize]
         [HttpGet("my-applications")]
@@ -23,6 +25,8 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int pageSize = 10
         )
         {
+            logger.LogInformation("GET /api/adoptionapplication/my-applications called with status: {Status}, pageNumber: {PageNumber}, pageSize: {PageSize}", 
+                status, pageNumber, pageSize);
             var query = new GetMyAdoptionApplicationsQuery(
                 status,
                 pageNumber,
@@ -30,7 +34,10 @@ namespace PetShelter.Api.Controllers
             );
             var result = await sender.Send(query);
             return result.Match(
-                success => Ok(success.ToPagedListResponse()),
+                success => {
+                    logger.LogInformation("GET /api/adoptionapplication/my-applications successful for userId: {UserId}", success.Items.FirstOrDefault()?.ApplicantId);
+                    return Ok(success.ToPagedListResponse());
+                },
                 error => Problem(error)
             );
         }
@@ -42,6 +49,8 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int pageSize = 10
         )
         {
+            logger.LogInformation("GET /api/adoptionapplication/my-pets-applications called with status: {Status}, pageNumber: {PageNumber}, pageSize: {PageSize}", 
+                status, pageNumber, pageSize);
             var query = new GetMyPetsAdoptionApplicationQuery(
                 status,
                 pageNumber,
@@ -49,7 +58,10 @@ namespace PetShelter.Api.Controllers
             );
             var result = await sender.Send(query);
             return result.Match(
-                success => Ok(success.ToPagedListResponse()),
+                success => {
+                    logger.LogInformation("GET /api/adoptionapplication/my-pets-applications successful for userId: {UserId}", success.Items.FirstOrDefault()?.ApplicantId);
+                    return Ok(success.ToPagedListResponse());
+                },
                 error => Problem(error)
             );
         }
@@ -57,10 +69,14 @@ namespace PetShelter.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdoptionApplicationById(Guid id)
         {
+            logger.LogInformation("GET /api/adoptionapplication/[id] called with id: {Id}", id);
             var query = new GetAdoptionApplicationByIdQuery(id);
             var result = await sender.Send(query);
             return result.Match(
-                success => Ok(success.ToAdoptionApplicationResponse()),
+                success => {
+                    logger.LogInformation("GET /api/adoptionapplication/[id] successful for id: {Id}", id);
+                    return Ok(success.ToAdoptionApplicationResponse());
+                },
                 error => Problem(error)
             );
         }
@@ -68,10 +84,14 @@ namespace PetShelter.Api.Controllers
         [HttpPut("{id}/reject")]
         public async Task<IActionResult> RejectAdoptionApplication(Guid id)
         {
+            logger.LogInformation("PUT /api/adoptionapplication/[id]/reject called with id: {Id}", id);
             var command = new RejectAdoptionApplicationCommand(id);
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(success),
+                success => {
+                    logger.LogInformation("PUT /api/adoptionapplication/[id]/reject successful for id: {Id}", id);
+                    return Ok(success);
+                },
                 error => Problem(error)
             );
         }
@@ -79,10 +99,14 @@ namespace PetShelter.Api.Controllers
         [HttpPut("{id}/confirm")]
         public async Task<IActionResult> ConfirmAdoptionApplication(Guid id)
         {
+            logger.LogInformation("PUT /api/adoptionapplication/[id]/confirm called with id: {Id}", id);
             var command = new ConfirmAdoptionApplicationCommand(id);
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(success),
+                success => {
+                    logger.LogInformation("PUT /api/adoptionapplication/[id]/confirm successful for id: {Id}", id);
+                    return Ok(success);
+                },
                 error => Problem(error)
             );
         }
@@ -90,6 +114,7 @@ namespace PetShelter.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateAdoptionApplication(CreateAdoptionApplicationRequest request)
         {
+            logger.LogInformation("POST /api/adoptionapplication/create called with petId: {PetId}", request.PetId);
             var command = new CreateAdoptionApplicationCommand(
                 Guid.Parse(request.PetId),
                 request.Message
@@ -97,7 +122,10 @@ namespace PetShelter.Api.Controllers
 
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(success.ToAdoptionApplicationResponse()),
+                success => {
+                    logger.LogInformation("POST /api/adoptionapplication/create successful for petId: {PetId}", request.PetId);
+                    return Ok(success.ToAdoptionApplicationResponse());
+                },
                 error => Problem(error)
             );
         }

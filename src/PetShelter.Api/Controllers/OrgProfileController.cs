@@ -8,7 +8,9 @@ using PetShelter.Application.OrgProfiles.Queries.GetOrganizationsQuery;
 namespace PetShelter.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrgProfileController(ISender sender) : ApiController
+    public class OrgProfileController(
+        ISender sender, 
+        ILogger<OrgProfileController> logger) : ApiController(logger)
     {
         [HttpGet]
         public async Task<IActionResult> GetOrgProfiles(
@@ -18,6 +20,8 @@ namespace PetShelter.Api.Controllers
             [FromQuery] string? address = null
         )
         {
+            logger.LogInformation("GET /api/orgprofile called with orgName: {OrgName}, address: {Address}, pageNumber: {PageNumber}, pageSize: {PageSize}", 
+                orgName, address, pageNumber, pageSize);
             var query = new GetOrganizationsQuery(
                 orgName,
                 address,
@@ -27,7 +31,10 @@ namespace PetShelter.Api.Controllers
             var result = await sender.Send(query);
 
             return result.Match(
-                success => Ok(success.ToPagedListResponse()),
+                success => {
+                    logger.LogInformation("GET /api/orgprofile successful with {Count} results", success.TotalCount);
+                    return Ok(success.ToPagedListResponse());
+                },
                 error => Problem(error)
             );
         }
@@ -35,11 +42,15 @@ namespace PetShelter.Api.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> UpdateOrgProfile([FromForm] OrgProfileUpdateRequest request)
         {
+            logger.LogInformation("PUT /api/orgprofile/update called with orgName: {OrgName}, address: {Address}", request.OrgName, request.Address);
             var command = request.ToOrgProfileUpdateCommand();
 
             var result = await sender.Send(command);
             return result.Match(
-                success => Ok(success.ToOrgProfileResponse()),
+                success => {
+                    logger.LogInformation("PUT /api/orgprofile/update successful for orgId: {OrgId}", success.Id);
+                    return Ok(success.ToOrgProfileResponse());
+                },
                 error => Problem(error)
             );
         }

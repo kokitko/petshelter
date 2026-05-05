@@ -26,7 +26,6 @@
     <Folder Include="Authentication\Commands\Logout\" />
     <Folder Include="Authentication\Commands\RefreshToken\" />
     <Folder Include="Authentication\Common\" />
-    <Folder Include="Common\" />
     <Folder Include="Common\Behaviours\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Interfaces\Authentication\" />

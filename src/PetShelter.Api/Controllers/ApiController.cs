@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace PetShelter.Api.Controllers
 {
     [ApiController]
-    public class ApiController : ControllerBase
+    public class ApiController(ILogger<ApiController> logger) : ControllerBase
     {
         protected IActionResult Problem(List<Error> errors)
         {
+            logger.LogWarning("API call resulted in errors: {Errors}", string.Join(", ", errors.Select(e => e.Description)));
             if (errors.Count == 0)
                 return Problem();
                 

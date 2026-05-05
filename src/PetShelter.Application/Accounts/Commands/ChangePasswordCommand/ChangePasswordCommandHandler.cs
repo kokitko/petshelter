@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using PetShelter.Application.Accounts.Common;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Domain.Common.Errors;
@@ -11,9 +12,9 @@ public class ChangePasswordCommandHandler(
     ICurrentUserProvider currentUserProvider,
     IPasswordHasher passwordHasher,
     IRefreshTokenRepository refreshTokenRepository
-) : IRequestHandler<ChangePasswordCommand, ErrorOr<bool>>
+) : IRequestHandler<ChangePasswordCommand, ErrorOr<ChangeSensitiveInfoDto>>
 {
-    public async Task<ErrorOr<bool>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<ChangeSensitiveInfoDto>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
         var userId = currentUserProvider.GetCurrentUserId();
         if (userId == null)
@@ -29,6 +30,6 @@ public class ChangePasswordCommandHandler(
         user.PasswordHash = passwordHasher.HashPassword(request.NewPassword);
         await userRepository.UpdateAsync(user);
         await refreshTokenRepository.DeleteByUserIdAsync(userId.Value);
-        return true;
+        return new ChangeSensitiveInfoDto(user.Id.ToString());
     }
 }

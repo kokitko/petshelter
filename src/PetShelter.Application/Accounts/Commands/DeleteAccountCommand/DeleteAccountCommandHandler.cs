@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using PetShelter.Application.Accounts.Common;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
@@ -19,9 +20,9 @@ public class DeleteAccountCommandHandler(
     IRefreshTokenRepository refreshTokenRepository,
     IPasswordHasher passwordHasher,
     ICacheService cacheService
-) : IRequestHandler<DeleteAccountCommand, ErrorOr<bool>>
+) : IRequestHandler<DeleteAccountCommand, ErrorOr<ChangeSensitiveInfoDto>>
 {
-    public async Task<ErrorOr<bool>> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<ChangeSensitiveInfoDto>> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
     {
         var userId = currentUserProvider.GetCurrentUserId();
         if (userId == null)
@@ -65,6 +66,6 @@ public class DeleteAccountCommandHandler(
         await userRepository.DeleteAsync(user);
         await cacheService.RemoveByPrefixAsync("GetOrganizationsQuery", cancellationToken);
         
-        return true;
+        return new ChangeSensitiveInfoDto(userId.Value.ToString());
     }
 }

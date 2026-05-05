@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PetShelter.Api.Common.Exceptions;
 
-public class GlobalExceptionHandler : IExceptionHandler
+public class GlobalExceptionHandler(
+    ILogger<GlobalExceptionHandler> logger
+) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
+        logger.LogError(exception, "An unhandled exception occurred while processing the request.");
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status500InternalServerError,
