@@ -16,6 +16,11 @@ using PetShelter.Application.Admin.Commands.AdminDeleteAdoptionApplicationComman
 
 namespace PetShelter.Api.Controllers
 {
+    /// <summary>
+    ///  This controller handles all admin-related operations, including managing user accounts, pet profiles, and adoption applications. Access to this controller is restricted to users with the "Admin" role.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="logger"></param>
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class AdminController(
@@ -24,6 +29,12 @@ namespace PetShelter.Api.Controllers
     ) : ApiController(logger)
     {
         [HttpDelete("applications/{applicationId}")]
+        [EndpointSummary("Delete Adoption Application")]
+        [EndpointDescription("Deletes a specific adoption application by its ID. Requires admin privileges.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAdoptionApplication([FromRoute] string applicationId)
         {
             logger.LogInformation("DELETE /api/admin/applications/{ApplicationId} called", applicationId);
@@ -38,6 +49,12 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpDelete("pets/{petId}")]
+        [EndpointSummary("Delete Pet")]
+        [EndpointDescription("Deletes a specific pet profile and adoption applications associated with it by its ID. Requires admin privileges.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePet([FromRoute] string petId)
         {
             logger.LogInformation("DELETE /api/admin/pets/{PetId} called", petId);
@@ -53,6 +70,13 @@ namespace PetShelter.Api.Controllers
         }
 
         [HttpPut("pets/{petId}")]
+        [EndpointSummary("Update Pet")]
+        [EndpointDescription("Updates the information for a specific pet profile by its ID. Requires admin privileges.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePet(
             [FromRoute] string petId,
             [FromForm] AdminUpdatePetRequest request)
@@ -81,6 +105,12 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpDelete("accounts/{userId}")]
+        [EndpointSummary("Delete User")]
+        [EndpointDescription("Deletes a specific user account and their associated data by its ID. Requires admin privileges.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteUser([FromRoute] string userId)
         {
             logger.LogInformation("DELETE /api/admin/accounts/{UserId} called", userId);
@@ -95,6 +125,13 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpPut("accounts/{userId}")]
+        [EndpointSummary("Update User")]
+        [EndpointDescription("Updates the information for a specific user account by its ID. Requires admin privileges.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateUser(
             [FromRoute] string userId, 
             [FromForm] AdminUpdateAccountRequest request)
@@ -134,6 +171,8 @@ namespace PetShelter.Api.Controllers
 
         }
         [HttpGet("orgs")]
+        [EndpointSummary("Get Organization Profiles")]
+        [EndpointDescription("Retrieves a list of organization profiles with optional filtering. Requires admin privileges.")]
         public async Task<IActionResult> GetOrgProfiles(
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
@@ -161,6 +200,8 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpGet("users")]
+        [EndpointSummary("Get User Profiles")]
+        [EndpointDescription("Retrieves a list of user profiles with optional filtering. Requires admin privileges.")]
         public async Task<IActionResult> GetUsers(
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,

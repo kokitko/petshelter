@@ -12,6 +12,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PetShelter.Api.Controllers
 {
+    /// <summary>
+    ///  This controller manages all operations related to pets, including creating new pet listings, retrieving pet details, updating pet information, and deleting pet listings. It provides endpoints for clients to interact with pet data, allowing them to view available pets, manage their own pets, and perform necessary actions based on their roles and permissions.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="logger"></param>
     [Route("api/pets")]
     public class PetsController(
         ISender sender,
@@ -19,6 +24,12 @@ namespace PetShelter.Api.Controllers
     {
         [Authorize]
         [HttpDelete("{id}")]
+        [EndpointSummary("Delete Pet")]
+        [EndpointDescription("Deletes a pet listing based on its ID. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePet(Guid id)
         {
             logger.LogInformation("DELETE /api/pets/{Id} called", id);
@@ -34,6 +45,13 @@ namespace PetShelter.Api.Controllers
         }
         [Authorize]
         [HttpPut("{id}/confirm")]
+        [EndpointSummary("Confirm Pet")]
+        [EndpointDescription("Confirms (as adopted) a pet listing based on its ID. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> ConfirmPet(Guid id)
         {
             logger.LogInformation("PUT /api/pets/{Id}/confirm called", id);
@@ -48,6 +66,10 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpGet("{id}")]
+        [EndpointSummary("Get Pet by ID")]
+        [EndpointDescription("Retrieves the details of a specific pet based on its ID.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPetById(Guid id)
         {
             logger.LogInformation("GET /api/pets/{Id} called", id);
@@ -62,6 +84,11 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpGet("user/{userId}")]
+        [EndpointSummary("Get User's Pets")]
+        [EndpointDescription("Retrieves a list of pets associated with a specific user.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUserPets(
             Guid userId,
             [FromQuery] string? status,
@@ -85,6 +112,10 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpGet]
+        [EndpointSummary("Get Pets with Filters")]
+        [EndpointDescription("Retrieves a list of pets based on the provided filters.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetPetsPaged(
             [FromQuery] string? status,
             [FromQuery] int? age,
@@ -109,6 +140,11 @@ namespace PetShelter.Api.Controllers
         }
         [Authorize]
         [HttpPost]
+        [EndpointSummary("Create Pet")]
+        [EndpointDescription("Creates a new pet listing. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CreatePet([FromForm] CreatePetRequest request)
         {
             logger.LogInformation("POST /api/pets called with name: {Name}, species: {Species}, breed: {Breed}, age: {Age}", request.Name, request.Species, request.Breed, request.Age);
@@ -126,6 +162,13 @@ namespace PetShelter.Api.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
+        [EndpointSummary("Update Pet")]
+        [EndpointDescription("Updates the information for a specific pet. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePet(string id, [FromForm] UpdatePetRequest request)
         {
             logger.LogInformation("PUT /api/pets/{Id} called with name: {Name}, species: {Species}, breed: {Breed}, age: {Age}", id, request.Name, request.Species, request.Breed, request.Age);

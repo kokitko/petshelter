@@ -8,12 +8,21 @@ using PetShelter.Application.Authentication.Commands.Logout;
 
 namespace PetShelter.Api.Controllers
 {
+    /// <summary>
+    ///  This controller handles all authentication-related operations, including user registration, login, logout, and token refreshing. It provides endpoints for users to authenticate themselves and manage their authentication tokens.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="logger"></param>
     [Route("api/[controller]")]
     public class AuthController(
         ISender sender,
         ILogger<AuthController> logger) : ApiController(logger)
     {
         [HttpPost("logout")]
+        [EndpointSummary("Logout")]
+        [EndpointDescription("Logs out the current user and invalidates their refresh token.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Logout()
         {
             logger.LogInformation("POST /api/auth/logout called");
@@ -29,6 +38,11 @@ namespace PetShelter.Api.Controllers
         }
 
         [HttpPost("register")]
+        [EndpointSummary("Register")]
+        [EndpointDescription("Registers a new user account.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             logger.LogInformation("POST /api/auth/register called with email: {Email}", request.Email);
@@ -48,6 +62,11 @@ namespace PetShelter.Api.Controllers
         }
 
         [HttpPost("login")]
+        [EndpointSummary("Login")]
+        [EndpointDescription("Logs in a user and returns an authentication token.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             logger.LogInformation("POST /api/auth/login called with email: {Email}", request.Email);
@@ -66,6 +85,11 @@ namespace PetShelter.Api.Controllers
         }
 
         [HttpPost("refresh-token")]
+        [EndpointSummary("Refresh Token")]
+        [EndpointDescription("Generates a new authentication token using a valid refresh token.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> RefreshToken()
         {
             logger.LogInformation("POST /api/auth/refresh-token called");

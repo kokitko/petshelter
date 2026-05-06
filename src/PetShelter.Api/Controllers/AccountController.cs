@@ -13,6 +13,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PetShelter.Api.Controllers
 {
+    /// <summary>
+    ///  This controller handles all account-related operations, including retrieving account information, changing email and password, and deleting accounts.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="logger"></param>
     [Route("api/[controller]")]
     public class AccountController(
         ISender sender,
@@ -20,6 +25,11 @@ namespace PetShelter.Api.Controllers
     {
         [Authorize]
         [HttpGet("me")]
+        [EndpointSummary("Get My Account Info")]
+        [EndpointDescription("Retrieves the account information of the currently authenticated user. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetMyAccountInfo()
         {
             logger.LogInformation("GET /api/account/me called");
@@ -38,6 +48,10 @@ namespace PetShelter.Api.Controllers
             );
         }
         [HttpGet("{id}")]
+        [EndpointSummary("Get Account Info by ID")]
+        [EndpointDescription("Retrieves the account information for a specific user by their ID. This endpoint is public and does not require authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAccountInfo(Guid id)
         {
             logger.LogInformation("GET /api/account/[id] called with id: {Id}", id);
@@ -57,6 +71,12 @@ namespace PetShelter.Api.Controllers
         }
         [Authorize]
         [HttpPut("change-password")]
+        [EndpointSummary("Change Password")]
+        [EndpointDescription("Changes the password for the currently authenticated user. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
         {
             logger.LogInformation("PUT /api/account/change-password called");
@@ -78,6 +98,13 @@ namespace PetShelter.Api.Controllers
         }
         [Authorize]
         [HttpPut("change-email")]
+        [EndpointSummary("Change Email")]
+        [EndpointDescription("Changes the email for the currently authenticated user. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> ChangeEmail(ChangeEmailRequest request)
         {
             logger.LogInformation("PUT /api/account/change-email called");
@@ -99,6 +126,12 @@ namespace PetShelter.Api.Controllers
         }
         [Authorize]
         [HttpDelete("delete")]
+        [EndpointSummary("Delete Account")]
+        [EndpointDescription("Deletes the account for the currently authenticated user. Requires authentication.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAccount(DeleteAccountRequest request)
         {
             logger.LogInformation("DELETE /api/account/delete called");
@@ -115,7 +148,6 @@ namespace PetShelter.Api.Controllers
                 error => Problem(error)
             );
         }
-
         private void ClearRefreshTokenCookie()
         {
             Response.Cookies.Delete("refreshToken");

@@ -13,6 +13,5 @@ public static partial class OrgProfileMapper
     [MapperIgnoreTarget(nameof(OrgProfile.User))]
     [MapperIgnoreTarget(nameof(OrgProfile.IsVerified))]
     public static partial OrgProfile ToOrgProfile(this OrgProfileInfo dto);
-    public static partial ReturnOrgProfileInfo ToReturnOrgProfileInfo(this OrgProfile orgProfile);
 #pragma warning restore RMG012
 }
