@@ -5,7 +5,7 @@ using PetShelter.Application.Dtos.Pet;
 namespace PetShelter.Application.Pets.Commands.UpdatePetCommand;
 
 public record UpdatePetCommand(
-    Guid Id,
+    string Id,
     string Name,
     string Species,
     string Breed,

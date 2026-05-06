@@ -17,7 +17,8 @@ public class GetOrganizationsQueryHandler(
             request.PageNumber, 
             request.PageSize, 
             request.OrgName, 
-            request.Address);
+            request.Address, 
+            request.IsVerified);
 
         List<ReturnAppUserDto> orgDtos = orgProfiles
             .Select(o => o.User.ToReturnAppUserDto())

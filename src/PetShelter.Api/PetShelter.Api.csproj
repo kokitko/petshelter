@@ -26,6 +26,7 @@
     <Folder Include="Common\Exceptions\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Contracts\Account\" />
+    <Folder Include="Contracts\Admin\" />
     <Folder Include="Contracts\AdoptionApplication\" />
     <Folder Include="Controllers\" />
     <Folder Include="Http\" />

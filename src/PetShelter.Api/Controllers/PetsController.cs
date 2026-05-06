@@ -26,7 +26,7 @@ namespace PetShelter.Api.Controllers
             var result = await sender.Send(command);
             return result.Match(
                 success => {
-                    logger.LogInformation("DELETE /api/pets/[id] successful for petId: {PetId}", success.PetId);
+                    logger.LogInformation("DELETE /api/pets/[id] successful for petId: {PetId}", success.Id);
                     return Ok(success);
                 },
                 error => Problem(error)
@@ -126,7 +126,7 @@ namespace PetShelter.Api.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePet(Guid id, [FromForm] UpdatePetRequest request)
+        public async Task<IActionResult> UpdatePet(string id, [FromForm] UpdatePetRequest request)
         {
             logger.LogInformation("PUT /api/pets/{Id} called with name: {Name}, species: {Species}, breed: {Breed}, age: {Age}", id, request.Name, request.Species, request.Breed, request.Age);
             var command = new UpdatePetCommand(

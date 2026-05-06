@@ -9,6 +9,7 @@ namespace PetShelter.Application.OrgProfiles.Queries.GetOrganizationsQuery;
 public record GetOrganizationsQuery(
     string? OrgName,
     string? Address,
+    bool? IsVerified,
     int PageNumber = 1,
     int PageSize = 10
 ) : IRequest<ErrorOr<PagedList<ReturnAppUserDto>>>, ICachedQuery

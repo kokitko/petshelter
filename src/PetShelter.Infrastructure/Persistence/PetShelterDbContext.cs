@@ -17,15 +17,6 @@ public class PetShelterDbContext(
     public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        
-        // Suppress the pending model changes warning since seed data uses dynamic password hashing
-        optionsBuilder.ConfigureWarnings(w => 
-            w.Ignore(RelationalEventId.PendingModelChangesWarning));
-    }
-
     protected override void OnModelCreating(ModelBuilder mb)
     {
         base.OnModelCreating(mb);

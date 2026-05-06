@@ -17,14 +17,16 @@ namespace PetShelter.Api.Controllers
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? orgName = null,
-            [FromQuery] string? address = null
+            [FromQuery] string? address = null,
+            [FromQuery] bool? isVerified = null
         )
         {
-            logger.LogInformation("GET /api/orgprofile called with orgName: {OrgName}, address: {Address}, pageNumber: {PageNumber}, pageSize: {PageSize}", 
-                orgName, address, pageNumber, pageSize);
+            logger.LogInformation("GET /api/orgprofile called with pageNumber: {PageNumber}, pageSize: {PageSize}, orgName: {OrgName}, address: {Address}, isVerified: {IsVerified}", 
+                pageNumber, pageSize, orgName, address, isVerified);
             var query = new GetOrganizationsQuery(
                 orgName,
                 address,
+                isVerified,
                 pageNumber,
                 pageSize
             );
@@ -33,7 +35,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success => {
                     logger.LogInformation("GET /api/orgprofile successful with {Count} results", success.TotalCount);
-                    return Ok(success.ToPagedListResponse());
+                    return Ok(success.ToPagedOrgListResponse());
                 },
                 error => Problem(error)
             );

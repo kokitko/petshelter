@@ -61,9 +61,10 @@ public class OrgProfileRepository(
 
     public async Task<(IEnumerable<OrgProfile> Profiles, int TotalCount)> GetOrgProfilesAsync(
         int pageNumber, 
-        int pageSize, 
+        int pageSize,
         string? OrgName, 
-        string? Address)
+        string? Address,
+        bool? IsVerified)
     {
         try {
             var query = context.OrgProfiles.Include(p => p.User).AsQueryable();
@@ -73,6 +74,8 @@ public class OrgProfileRepository(
 
             if (!string.IsNullOrEmpty(Address))
                 query = query.Where(p => p.Address.Contains(Address));
+            if (IsVerified.HasValue)
+                query = query.Where(p => p.IsVerified == IsVerified);
 
             var totalCount = await query.CountAsync();
             var profiles = await query

@@ -1,5 +1,7 @@
+using PetShelter.Api.Common.Models;
 using PetShelter.Api.Contracts.UserProfile;
 using PetShelter.Application.Accounts.Common;
+using PetShelter.Application.Common.Models;
 using PetShelter.Application.Dtos.Users;
 using Riok.Mapperly.Abstractions;
 
@@ -25,5 +27,7 @@ public static partial class UserProfileContractMapper
 
 #pragma warning disable RMG020
     public static partial UserProfileResponse ToUserProfileResponse(this MyAccountInfoDto userProfile);
+        [MapProperty(nameof(PagedList<ReturnAppUserDto>.Items), nameof(PagedListResponse<UserProfileResponse>.Items))]
+    public static partial PagedListResponse<UserProfileResponse> ToPagedUserListResponse(this PagedList<ReturnAppUserDto> pagedList);
 #pragma warning restore RMG020
 }

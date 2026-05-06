@@ -25,7 +25,7 @@ public class UpdatePetCommandHandler(
         if (currentUserId == null)
             return Errors.Authentication.Unauthenticated;
 
-        var pet = await petRepository.GetByIdAsync(request.Id);
+        var pet = await petRepository.GetByIdAsync(Guid.Parse(request.Id));
         if (pet == null)
             return Errors.Pets.NotFound;
 

@@ -14,6 +14,16 @@
     <Folder Include="Accounts\Queries\" />
     <Folder Include="Accounts\Queries\GetAccountInfoQuery\" />
     <Folder Include="Accounts\Queries\GetMyAccountInfoQuery\" />
+    <Folder Include="Admin\" />
+    <Folder Include="Admin\Commands\" />
+    <Folder Include="Admin\Commands\AdminDeleteAccountCommand\" />
+    <Folder Include="Admin\Commands\AdminDeleteAdoptionApplicationCommand\" />
+    <Folder Include="Admin\Commands\AdminDeletePetCommand\" />
+    <Folder Include="Admin\Commands\AdminUpdateAccountCommand\" />
+    <Folder Include="Admin\Commands\AdminUpdatePetCommand\" />
+    <Folder Include="Admin\Queries\" />
+    <Folder Include="Admin\Queries\AdminGetOrganizationsQuery\" />
+    <Folder Include="Admin\Queries\AdminGetUsersQuery\" />
     <Folder Include="AdoptionApplications\Commands\" />
     <Folder Include="AdoptionApplications\Commands\ConfirmAdoptionApplicationsCommand\" />
     <Folder Include="AdoptionApplications\Commands\CreateAdoptionApplicationCommand\" />
@@ -34,7 +44,6 @@
     <Folder Include="Common\Interfaces\Services\" />
     <Folder Include="Common\Models\" />
     <Folder Include="Dtos\Pet\" />
-    <Folder Include="OrgProfiles\Common\" />
     <Folder Include="Pets\Commands\" />
     <Folder Include="Pets\Commands\ConfirmPetCommand\" />
     <Folder Include="Pets\Commands\CreatePetCommand\" />
@@ -43,8 +52,6 @@
     <Folder Include="Pets\Common\" />
     <Folder Include="Pets\Queries\GetPetByIdQuery\" />
     <Folder Include="Pets\Queries\GetPetsQuery\" />
-    <Folder Include="UserProfiles\Common\" />
-    <Folder Include="UserProfiles\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

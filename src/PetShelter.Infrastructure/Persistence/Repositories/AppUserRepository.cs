@@ -43,6 +43,12 @@ public class AppUserRepository(
             var user = await context.AppUsers
                 .Include(u => u.OrgProfile)
                 .Include(u => u.UserProfile)
+                .Include(u => u.Pets)
+                    .ThenInclude(p => p.Images)
+                .Include(u => u.Pets)
+                    .ThenInclude(p => p.Applications)
+                .Include(u => u.Applications)
+                .Include(u => u.RefreshTokens)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             logger.LogInformation("Retrieved user with id: {UserId}", user?.Id);

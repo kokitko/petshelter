@@ -3,6 +3,7 @@ using MediatR;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
+using PetShelter.Application.Dtos.Users;
 using PetShelter.Application.Pets.Common;
 using PetShelter.Domain.Common.Errors;
 using PetShelter.Domain.Entities;
@@ -14,9 +15,9 @@ public class DeletePetCommandHandler(
     IAdoptionApplicationRepository adoptionRepository,
     ICurrentUserProvider currentUserProvider,
     ICacheService cacheService
-) : IRequestHandler<DeletePetCommand, ErrorOr<DeletePetDto>>
+) : IRequestHandler<DeletePetCommand, ErrorOr<ChangeSensitiveInfoDto>>
 {
-    public async Task<ErrorOr<DeletePetDto>> Handle(DeletePetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<ChangeSensitiveInfoDto>> Handle(DeletePetCommand request, CancellationToken cancellationToken)
     {
         var userId = currentUserProvider.GetCurrentUserId();
         if (userId == null)
@@ -38,6 +39,6 @@ public class DeletePetCommandHandler(
         await petRepository.DeleteAsync(pet);
         await cacheService.RemoveByPrefixAsync("GetPetsQuery", cancellationToken);
 
-        return new DeletePetDto(petId);
+        return new ChangeSensitiveInfoDto(petId);
     }
 }

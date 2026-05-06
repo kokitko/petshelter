@@ -69,7 +69,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success =>
                 {
-                    logger.LogInformation("Password change successful for userId: {UserId}", success.UserId);
+                    logger.LogInformation("Password change successful for userId: {UserId}", success.Id);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },
@@ -90,7 +90,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success =>
                 {
-                    logger.LogInformation("Email change successful for userId: {UserId}", success.UserId);
+                    logger.LogInformation("Email change successful for userId: {UserId}", success.Id);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },
@@ -108,7 +108,7 @@ namespace PetShelter.Api.Controllers
             return result.Match(
                 success =>
                 {
-                    logger.LogInformation("Account deletion successful for userId: {UserId}", success.UserId);
+                    logger.LogInformation("Account deletion successful for userId: {UserId}", success.Id);
                     ClearRefreshTokenCookie();
                     return Ok(success);
                 },

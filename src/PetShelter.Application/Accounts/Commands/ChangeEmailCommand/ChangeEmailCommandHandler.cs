@@ -1,9 +1,9 @@
 using ErrorOr;
 using MediatR;
-using PetShelter.Application.Accounts.Common;
 using PetShelter.Application.Common.Interfaces.Authentication;
 using PetShelter.Application.Common.Interfaces.Persistence;
 using PetShelter.Application.Common.Interfaces.Services;
+using PetShelter.Application.Dtos.Users;
 using PetShelter.Domain.Common.Errors;
 
 namespace PetShelter.Application.Accounts.Commands.ChangeEmailCommand;

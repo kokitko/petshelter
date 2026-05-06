@@ -31,7 +31,7 @@ public static partial class OrgProfileMapper
 #pragma warning disable RMG020
     public static partial OrgProfileUpdateCommand ToOrgProfileUpdateCommand(this OrgProfileUpdateRequest updateInfo);
     [MapProperty(nameof(PagedList<ReturnAppUserDto>.Items), nameof(PagedListResponse<OrgProfileResponse>.Items))]
-    public static partial PagedListResponse<OrgProfileResponse> ToPagedListResponse(this PagedList<ReturnAppUserDto> pagedList);
+    public static partial PagedListResponse<OrgProfileResponse> ToPagedOrgListResponse(this PagedList<ReturnAppUserDto> pagedList);
     public static partial OrgProfileResponse ToOrgProfileResponse(this MyAccountInfoDto orgProfile);
 #pragma warning restore RMG020
 }

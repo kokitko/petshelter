@@ -83,4 +83,32 @@ public class UserProfileRepository(
             throw;
         }
     }
+
+    public async Task<(IEnumerable<UserProfile> Profiles, int TotalCount)> GetUserProfilesAsync(int pageNumber, int pageSize, string? FirstName, string? LastName)
+    {
+        try {
+            var query = context.UserProfiles.Include(p => p.User).AsQueryable();
+
+            if (!string.IsNullOrEmpty(FirstName))
+                query = query.Where(p => p.FirstName.Contains(FirstName));
+
+            if (!string.IsNullOrEmpty(LastName))
+                query = query.Where(p => p.LastName.Contains(LastName));
+
+            var totalCount = await query.CountAsync();
+            var profiles = await query
+                .OrderByDescending(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            logger.LogInformation("Retrieved {Count} user profiles with pageNumber: {PageNumber}, pageSize: {PageSize}, FirstName: {FirstName}, LastName: {LastName}", 
+                profiles.Count, pageNumber, pageSize, FirstName, LastName);
+            return (profiles, totalCount);
+        } catch (Exception ex) {
+            logger.LogError(ex, "Error retrieving user profiles with pageNumber: {PageNumber}, pageSize: {PageSize}, FirstName: {FirstName}, LastName: {LastName}", 
+                pageNumber, pageSize, FirstName, LastName);
+            throw;
+        }
+    }
 }
