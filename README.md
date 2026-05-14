@@ -20,7 +20,7 @@ The project is built with a focus on maintainability, scalability, and performan
 
 | Category | Technology |
 | :--- | :--- |
-| **Framework** | .NET 8 (ASP.NET Core) |
+| **Framework** | .NET 10 (ASP.NET Core) |
 | **Database** | MS SQL Server with Entity Framework Core |
 | **Caching** | Redis (Distributed Cache) |
 | **Mapping** | **Mapperly** (Source-generator based, superior performance) |
